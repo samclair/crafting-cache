@@ -21,15 +21,27 @@ class App extends React.Component {
       .catch(error => console.error(error.message));
   }
 
+  getAverageGrade() {
+    if (!this.state.grades.length) {
+      return 0;
+    }
+    const gradesArr = this.state.grades.map(grade => grade.grade);
+    return Math.round(
+      gradesArr.reduce(
+        (total, num) => total + num
+      ) / this.state.grades.length);
+  }
+
   componentDidUpdate() {
     // eslint-disable-next-line no-console
     console.log(this.state.grades);
   }
 
   render() {
+
     return (
       <div>
-        <Header text="Student Grade Table"/>
+        <Header text="Student Grade Table" averageGrade = {this.getAverageGrade()}/>
         <GradeTable grades = {this.state.grades}/>
       </div>
     );
