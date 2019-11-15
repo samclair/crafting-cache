@@ -17,6 +17,12 @@
       "course": "Web Development",
       "grade": 50,
       "id": 3
+    },
+    {
+      "name": "Christian Haney",
+      "grade": 88,
+      "course": "Web Development",
+      "id": 4
     }
   ]
 }

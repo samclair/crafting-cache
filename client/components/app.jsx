@@ -32,6 +32,17 @@ class App extends React.Component {
       ) / this.state.grades.length);
   }
 
+  addGrade(grade) {
+    const fetchConfig = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(grade)
+    };
+    fetch('api/grades', fetchConfig)
+      .then(res => res.json())
+      .then(grade => this.setState({ grades: this.state.grades.concat(grade) }));
+  }
+
   componentDidUpdate() {
     // eslint-disable-next-line no-console
     console.log(this.state.grades);
