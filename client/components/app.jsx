@@ -51,10 +51,12 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='container'>
         <Header text="Student Grade Table" averageGrade = {this.getAverageGrade()}/>
-        <GradeTable grades = {this.state.grades}/>
-        <GradeForm/>
+        <div className="row">
+          <GradeTable grades = {this.state.grades}/>
+          <GradeForm/>
+        </div>
       </div>
     );
   }
