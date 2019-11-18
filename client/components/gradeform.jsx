@@ -41,7 +41,7 @@ class GradeForm extends React.Component {
                 <i className="far fa-user"></i>
               </div>
             </div>
-            <input onChange={this.handleChange} name="name"className="form-control" type="text" placeholder="Name" />
+            <input onChange={this.handleChange} value = {this.state.name} name="name"className="form-control" type="text" placeholder="Name" />
           </div>
           <div className="input-group mb-2">
             <div className="input-group-prepend">
@@ -49,7 +49,7 @@ class GradeForm extends React.Component {
                 <i className="fas fa-book"></i>
               </div>
             </div>
-            <input onChange={this.handleChange} name="course"className="form-control" type="text" placeholder="Course"/>
+            <input onChange={this.handleChange} value = {this.state.course} name="course"className="form-control" type="text" placeholder="Course"/>
           </div>
           <div className="input-group mb-2">
             <div className="input-group-prepend">
@@ -57,10 +57,10 @@ class GradeForm extends React.Component {
                 <i className="fas fa-percent"></i>
               </div>
             </div>
-            <input onChange={this.handleChange} name="grade"className="form-control" type="text" placeholder="Grade"/>
+            <input onChange={this.handleChange} value = {this.state.grade} name="grade"className="form-control" type="text" placeholder="Grade"/>
           </div>
           <button type="submit" onClick={this.handleSubmit} className="btn btn-success mr-1">Add</button>
-          <button type="reset" onClick={this.handleClear} className="btn btn-secondary">Cancel</button>
+          <button type="button" onClick={this.handleClear} className="btn btn-secondary">Cancel</button>
         </div>
       </form>
     );
