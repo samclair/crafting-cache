@@ -17,24 +17,6 @@
       "course": "Web Development",
       "grade": 50,
       "id": 3
-    },
-    {
-      "name": "Christian Haney",
-      "grade": 88,
-      "course": "Web Development",
-      "id": 4
-    },
-    {
-      "name": "Pzo",
-      "course": "Coffee Drinking",
-      "grade": 88,
-      "id": 5
-    },
-    {
-      "name": "Pej",
-      "course": "BOTW",
-      "grade": 500,
-      "id": 6
     }
   ]
 }
