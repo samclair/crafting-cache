@@ -8,24 +8,28 @@ function Grade(props) {
       <td scope = 'row'>{grade.name}</td>
       <td>{grade.course}</td>
       <td>{grade.grade}</td>
+      <td className = "align-middle">
+        <button className = "btn btn-danger" onClick = {() => props.deleteGrade(grade.id)}>Delete</button>
+      </td>
     </tr>
   );
 }
 
 function GradeTable(props) {
   return (
-    <table className="ml-4 table table-striped col-7 table-bordered">
+    <table className="mx-4 table table-striped col-7 table-bordered">
       <thead>
         <tr>
           <th scope = 'col'>Student Name</th>
           <th scope = 'col'>Course</th>
           <th scope = 'col'>Grade</th>
+          <th scope='col'>Operations</th>
         </tr>
       </thead>
       <tbody>
         {
           props.grades.map(grade => {
-            return <Grade key = {grade.id} grade = {grade}/>;
+            return <Grade key = {grade.id} grade = {grade} deleteGrade = {props.deleteGrade} />;
           })
         }
       </tbody>

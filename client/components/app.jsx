@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './header';
 import GradeTable from './gradetable';
+import GradeForm from './gradeform';
 
 class App extends React.Component {
   constructor(props) {
@@ -8,6 +9,8 @@ class App extends React.Component {
     this.state = {
       grades: []
     };
+    this.addGrade = this.addGrade.bind(this);
+    this.deleteGrade = this.deleteGrade.bind(this);
   }
 
   componentDidMount() {
@@ -32,6 +35,24 @@ class App extends React.Component {
       ) / this.state.grades.length);
   }
 
+  addGrade(grade) {
+    const fetchConfig = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(grade)
+    };
+    fetch('api/grades', fetchConfig)
+      .then(res => res.json())
+      .then(grade => this.setState({ grades: this.state.grades.concat(grade) }));
+  }
+
+  deleteGrade(id) {
+    var newGrades = this.state.grades.filter(grade => grade.id !== id);
+    fetch(`api/grades/${id}`, { method: 'DELETE' })
+      .then(() => this.setState({ grades: newGrades }))
+      .catch(error => console.error(error.message));
+  }
+
   componentDidUpdate() {
     // eslint-disable-next-line no-console
     console.log(this.state.grades);
@@ -39,9 +60,12 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='container'>
         <Header text="Student Grade Table" averageGrade = {this.getAverageGrade()}/>
-        <GradeTable grades = {this.state.grades}/>
+        <div className="row">
+          <GradeTable grades = {this.state.grades} deleteGrade = {this.deleteGrade}/>
+          <GradeForm onSubmit = {this.addGrade}/>
+        </div>
       </div>
     );
   }
