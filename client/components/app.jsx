@@ -47,8 +47,13 @@ class App extends React.Component {
   }
 
   deleteGrade(id) {
+    const fetchConfig = {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: id })
+    };
     var newGrades = this.state.grades.filter(grade => grade.id !== id);
-    fetch(`api/grades/${id}`, { method: 'DELETE' })
+    fetch('api/grades', fetchConfig)
       .then(() => this.setState({ grades: newGrades }))
       .catch(error => console.error(error.message));
   }
