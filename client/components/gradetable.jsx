@@ -17,10 +17,10 @@ function Grade(props) {
 
 function GradeTable(props) {
   return (
-    <table className="mx-4 table table-striped col-7 table-bordered">
+    <table className="mx-md-4 table table-striped table-header col-sm-11 col-md-7 table-bordered">
       <thead>
         <tr>
-          <th scope = 'col'>Student Name</th>
+          <th scope = 'col'>Name</th>
           <th scope = 'col'>Course</th>
           <th scope = 'col'>Grade</th>
           <th scope='col'>Operations</th>
