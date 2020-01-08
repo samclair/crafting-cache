@@ -15,7 +15,12 @@ if ($request['method'] === 'POST') {
     throw new ApiError("Missing one or more fields for new student", 400);
   }
   add_grade($link, $name, $grade, $course);
-  $response['body'] = get_all_grades($link);
+  $response['body'] = [
+    'name' => $name,
+    'course' => $course,
+    'grade' => $grade
+
+];
   send($response);
 }
 
