@@ -22,12 +22,16 @@ class GradeForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.onSubmit(this.state);
-    this.handleClear();
+    let textPattern = /^[A-Za-z \d]{2,64}$/;
+    let numberPattern = /^[\d]{1,2}$|^100$/;
+    if (this.state.name.match(textPattern) && this.state.course.match(textPattern) && this.state.grade.match(numberPattern)) {
+      this.props.onSubmit(this.state);
+      this.handleClear();
+    }
   }
 
   handleChange(event) {
-    var input = event.target.name === 'grade' ? Number(event.target.value) : event.target.value;
+    var input = event.target.value;
     this.setState({ [event.target.name]: input });
   }
 
@@ -41,7 +45,7 @@ class GradeForm extends React.Component {
                 <i className="far fa-user"></i>
               </div>
             </div>
-            <input onChange={this.handleChange} value = {this.state.name} name="name"className="form-control" type="text" placeholder="Name" />
+            <input pattern="[A-Za-z]" title="Alphanumeric Name" onChange={this.handleChange} value = {this.state.name} name="name"className="form-control" type="text" placeholder="Name" />
           </div>
           <div className="input-group mb-2">
             <div className="input-group-prepend">

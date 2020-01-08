@@ -28,7 +28,7 @@ class App extends React.Component {
     if (!this.state.grades.length) {
       return 0;
     }
-    const gradesArr = this.state.grades.map(grade => grade.grade);
+    const gradesArr = this.state.grades.map(gradeRow => Number(gradeRow.grade));
     return Math.round(
       gradesArr.reduce(
         (total, num) => total + num
