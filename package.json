@@ -4,10 +4,8 @@
   "description": "The Student Grade Table: Written in React",
   "main": "server/index.js",
   "scripts": {
-    "client": "webpack-dev-server",
-    "start": "node server/index.js",
     "build": "webpack --mode=production",
-    "dev": "npm-run-all --silent --parallel start client",
+    "dev": "npm-run-all --silent --parallel dev:*",
     "dev:client": "webpack-dev-server",
     "dev:server": "php -S '0.0.0.0:9000' -t server/public -c php.ini",
     "db:export": "php database/export.php",
@@ -25,7 +23,6 @@
     ]
   },
   "dependencies": {
-    "json-server": "0.14.2",
     "react": "16.8.6",
     "react-dom": "16.8.6"
   },
