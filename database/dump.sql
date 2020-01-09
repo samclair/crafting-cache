@@ -28,7 +28,7 @@ CREATE TABLE `grades` (
   `course` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
   `id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,7 @@ CREATE TABLE `grades` (
 
 LOCK TABLES `grades` WRITE;
 /*!40000 ALTER TABLE `grades` DISABLE KEYS */;
-INSERT INTO `grades` VALUES ('Sam Nagle',89,'Reading',1);
+INSERT INTO `grades` VALUES ('Pzo',99,'Coffee Drinking',24),('Samantha Nagle',88,'Dueling',29),('Samantha Nagle',88,'Dueling',30),('Uzair Ashraf',99,'Anime Girls',31),('dfskdfjh',90,'jdhfksjdhfk',32);
 /*!40000 ALTER TABLE `grades` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-01-07 11:50:14
+-- Dump completed on 2020-01-09 12:18:16
