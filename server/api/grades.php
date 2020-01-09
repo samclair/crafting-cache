@@ -14,12 +14,12 @@ if ($request['method'] === 'POST') {
   if(!isset($name) && !isset($course) && !isset($grade)){
     throw new ApiError("Missing one or more fields for new student", 400);
   }
-  add_grade($link, $name, $grade, $course);
+  $gradeId = add_grade($link, $name, $grade, $course);
   $response['body'] = [
     'name' => $name,
     'course' => $course,
-    'grade' => $grade
-
+    'grade' => $grade,
+    'id' => $gradeId
 ];
   send($response);
 }
@@ -56,4 +56,5 @@ function add_grade($link, $name, $grade, $course){
   $sql = "INSERT INTO `grades` (`name`, `grade`, `course`, `id`)
   VALUES ('$name', '$grade', '$course', NULL)";
   mysqli_query($link, $sql);
+  return mysqli_insert_id($link);
 }

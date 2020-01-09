@@ -28,7 +28,7 @@ class App extends React.Component {
     if (!this.state.grades.length) {
       return 0;
     }
-    const gradesArr = this.state.grades.map(grade => grade.grade);
+    const gradesArr = this.state.grades.map(gradeRow => Number(gradeRow.grade));
     return Math.round(
       gradesArr.reduce(
         (total, num) => total + num
@@ -58,16 +58,11 @@ class App extends React.Component {
       .catch(error => console.error(error.message));
   }
 
-  componentDidUpdate() {
-    // eslint-disable-next-line no-console
-    console.log(this.state.grades);
-  }
-
   render() {
     return (
       <div className='container'>
         <Header text="Student Grade Table" averageGrade = {this.getAverageGrade()}/>
-        <div className="d-flex flex-row flex-md-row flex-column-reverse">
+        <div className="d-flex flex-row flex-lg-row flex-column-reverse">
           <GradeTable grades = {this.state.grades} deleteGrade = {this.deleteGrade}/>
           <GradeForm onSubmit = {this.addGrade}/>
         </div>
