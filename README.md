@@ -12,7 +12,7 @@ A full stack JavaScript CMS for managing student grades and classes
 
 ## Live Demo
 
-Coming Soon!
+Try the application live at <https://studentgrades.samcnagle.com>
 
 ## Features
 
@@ -30,6 +30,7 @@ Coming Soon!
 #### System Requirements
 
 - NPM 6 or higher
+- MySQL 7 or higher
 
 #### Getting Started
 
