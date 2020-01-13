@@ -4,10 +4,12 @@ class GradeForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      course: '',
-      grade: ''
+      name: { input: '', isValid: false },
+      course: { input: '', isValid: false },
+      grade: { input: '', isValid: false }
     };
+    this.textPattern = /^[A-Za-z \d]{2,64}$/;
+    this.numberPattern = /^[\d]{1,2}$|^100$/;
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClear = this.handleClear.bind(this);
@@ -22,9 +24,7 @@ class GradeForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    let textPattern = /^[A-Za-z \d]{2,64}$/;
-    let numberPattern = /^[\d]{1,2}$|^100$/;
-    if (this.state.name.match(textPattern) && this.state.course.match(textPattern) && this.state.grade.match(numberPattern)) {
+    if (this.state.name.match(this.textPattern) && this.state.course.match(this.textPattern) && this.state.grade.match(this.numberPattern)) {
       this.props.onSubmit(this.state);
       this.handleClear();
     }
@@ -32,7 +32,8 @@ class GradeForm extends React.Component {
 
   handleChange(event) {
     var input = event.target.value;
-    this.setState({ [event.target.name]: input });
+    var isValid = event.target.name === 'grade' ? event.target.value.match(this.numberPattern) : event.target.value.match(this.textPattern);
+    this.setState({ [event.target.name]: { input: input, isValid: isValid } });
   }
 
   render() {
@@ -45,7 +46,14 @@ class GradeForm extends React.Component {
                 <i className="far fa-user"></i>
               </div>
             </div>
-            <input pattern="[A-Za-z]" title="Alphanumeric Name" onChange={this.handleChange} value = {this.state.name} name="name"className="form-control" type="text" placeholder="Name" />
+            <input
+              title="Alphanumeric Student Name"
+              onChange={this.handleChange}
+              value={this.state.name.input}
+              name="name"
+              className={'form-control ' + (this.state.name.isValid ? 'is-valid' : 'is-invalid')}
+              type="text"
+              placeholder="Name" />
           </div>
           <div className="input-group mb-2">
             <div className="input-group-prepend">
@@ -53,7 +61,14 @@ class GradeForm extends React.Component {
                 <i className="fas fa-book"></i>
               </div>
             </div>
-            <input onChange={this.handleChange} value = {this.state.course} name="course"className="form-control" type="text" placeholder="Course"/>
+            <input
+              title="Alphanumeric Course Name"
+              onChange={this.handleChange}
+              value = {this.state.course.input}
+              name="course"
+              className={'form-control ' + (this.state.course.isValid ? 'is-valid' : 'is-invalid')}
+              type="text"
+              placeholder="Course"/>
           </div>
           <div className="input-group mb-2">
             <div className="input-group-prepend">
@@ -61,7 +76,14 @@ class GradeForm extends React.Component {
                 <i className="fas fa-percent"></i>
               </div>
             </div>
-            <input onChange={this.handleChange} value = {this.state.grade} name="grade"className="form-control" type="text" placeholder="Grade"/>
+            <input
+              title= "Grade Value (between 0-100)"
+              onChange={this.handleChange}
+              value={this.state.grade.input}
+              name="grade"
+              className={'form-control ' + (this.state.grade.isValid ? 'is-valid' : 'is-invalid')}
+              type="text"
+              placeholder="Grade"/>
           </div>
           <button type="submit" onClick={this.handleSubmit} className="btn btn-success mr-1">Add</button>
           <button type="button" onClick={this.handleClear} className="btn btn-secondary">Cancel</button>
