@@ -8,7 +8,7 @@ class GradeForm extends React.Component {
       course: { input: '', isValid: false },
       grade: { input: '', isValid: false }
     };
-    this.textPattern = /^[A-Za-z \d]{2,64}$/;
+    this.textPattern = /^[A-Za-z \d]{3,64}$/;
     this.numberPattern = /^[\d]{1,2}$|^100$/;
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -24,7 +24,9 @@ class GradeForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    if (this.state.name.match(this.textPattern) && this.state.course.match(this.textPattern) && this.state.grade.match(this.numberPattern)) {
+    if (this.state.name.match(this.textPattern) &&
+    this.state.course.match(this.textPattern) &&
+    this.state.grade.match(this.numberPattern)) {
       this.props.onSubmit(this.state);
       this.handleClear();
     }
@@ -32,7 +34,9 @@ class GradeForm extends React.Component {
 
   handleChange(event) {
     var input = event.target.value;
-    var isValid = event.target.name === 'grade' ? event.target.value.match(this.numberPattern) : event.target.value.match(this.textPattern);
+    var isValid = event.target.name ===
+    'grade' ? event.target.value.match(this.numberPattern)
+      : event.target.value.match(this.textPattern);
     this.setState({ [event.target.name]: { input: input, isValid: isValid } });
   }
 
