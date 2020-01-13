@@ -1,13 +1,16 @@
 import React from 'react';
+import FormInput from './forminput';
 
 class GradeForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      course: '',
-      grade: ''
+      name: { input: '', isValid: false },
+      course: { input: '', isValid: false },
+      grade: { input: '', isValid: false }
     };
+    this.textPattern = /^[A-Za-z \d]{3,64}$/;
+    this.numberPattern = /^[\d]{1,2}$|^100$/;
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClear = this.handleClear.bind(this);
@@ -22,9 +25,9 @@ class GradeForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    let textPattern = /^[A-Za-z \d]{2,64}$/;
-    let numberPattern = /^[\d]{1,2}$|^100$/;
-    if (this.state.name.match(textPattern) && this.state.course.match(textPattern) && this.state.grade.match(numberPattern)) {
+    if (this.state.name.match(this.textPattern) &&
+    this.state.course.match(this.textPattern) &&
+    this.state.grade.match(this.numberPattern)) {
       this.props.onSubmit(this.state);
       this.handleClear();
     }
@@ -32,37 +35,34 @@ class GradeForm extends React.Component {
 
   handleChange(event) {
     var input = event.target.value;
-    this.setState({ [event.target.name]: input });
+    var isValid = event.target.name ===
+    'grade' ? event.target.value.match(this.numberPattern)
+      : event.target.value.match(this.textPattern);
+    this.setState({ [event.target.name]: { input: input, isValid: isValid } });
   }
 
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
         <div className="form-group">
-          <div className="input-group mb-2">
-            <div className="input-group-prepend">
-              <div className="input-group-text">
-                <i className="far fa-user"></i>
-              </div>
-            </div>
-            <input pattern="[A-Za-z]" title="Alphanumeric Name" onChange={this.handleChange} value = {this.state.name} name="name"className="form-control" type="text" placeholder="Name" />
-          </div>
-          <div className="input-group mb-2">
-            <div className="input-group-prepend">
-              <div className="input-group-text">
-                <i className="fas fa-book"></i>
-              </div>
-            </div>
-            <input onChange={this.handleChange} value = {this.state.course} name="course"className="form-control" type="text" placeholder="Course"/>
-          </div>
-          <div className="input-group mb-2">
-            <div className="input-group-prepend">
-              <div className="input-group-text">
-                <i className="fas fa-percent"></i>
-              </div>
-            </div>
-            <input onChange={this.handleChange} value = {this.state.grade} name="grade"className="form-control" type="text" placeholder="Grade"/>
-          </div>
+          <FormInput
+            onChange = {this.handleChange}
+            symbol = "fa-user"
+            name = "name"
+            value = {this.state.name}
+          />
+          <FormInput
+            onChange={this.handleChange}
+            symbol="fa-book"
+            name="course"
+            value={this.state.course}
+          />
+          <FormInput
+            onChange = {this.handleChange}
+            symbol = "fa-percent"
+            name = "grade"
+            value = {this.state.grade}
+          />
           <button type="submit" onClick={this.handleSubmit} className="btn btn-success mr-1">Add</button>
           <button type="button" onClick={this.handleClear} className="btn btn-secondary">Cancel</button>
         </div>
