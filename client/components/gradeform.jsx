@@ -5,15 +5,16 @@ class GradeForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: { input: '', isValid: false },
-      course: { input: '', isValid: false },
-      grade: { input: '', isValid: false }
+      name: { input: '', isValid: false, isFocused: false },
+      course: { input: '', isValid: false, isFocused: false },
+      grade: { input: '', isValid: false, isFocused: false }
     };
     this.textPattern = /^[A-Za-z \d]{3,64}$/;
     this.numberPattern = /^[\d]{1,2}$|^100$/;
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClear = this.handleClear.bind(this);
+    this.onBlur = this.onBlur.bind(this);
   }
 
   handleClear() {
@@ -38,7 +39,11 @@ class GradeForm extends React.Component {
     var isValid = event.target.name ===
     'grade' ? event.target.value.match(this.numberPattern)
       : event.target.value.match(this.textPattern);
-    this.setState({ [event.target.name]: { input: input, isValid: isValid } });
+    this.setState({ [event.target.name]: { input: input, isValid: isValid, isFocused: true } });
+  }
+
+  onBlur(event) {
+    this.setState({ [event.target.name]: { isFocused: false } });
   }
 
   render() {
@@ -47,18 +52,21 @@ class GradeForm extends React.Component {
         <div className="form-group">
           <FormInput
             onChange = {this.handleChange}
+            onBlur = {this.onBlur}
             symbol = "fa-user"
             name = "name"
             value = {this.state.name}
           />
           <FormInput
-            onChange={this.handleChange}
+            onChange = {this.handleChange}
+            onBlur = {this.onBlur}
             symbol="fa-book"
             name="course"
             value={this.state.course}
           />
           <FormInput
             onChange = {this.handleChange}
+            onBlur = {this.onBlur}
             symbol = "fa-percent"
             name = "grade"
             value = {this.state.grade}

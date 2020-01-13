@@ -10,9 +10,10 @@ function FormInput(props) {
       </div>
       <input
         onChange={props.onChange}
+        onBlur = {props.onBlur}
         value={props.value.input}
         name={props.name}
-        className={'form-control ' + (props.value.isValid ? 'is-valid' : 'is-invalid')}
+        className={'form-control ' + (props.value.isFocused ? (props.value.isValid ? 'is-valid' : 'is-invalid') : '')}
         type="text"
         placeholder={props.name[0].toUpperCase() + props.name.slice(1)} />
     </div>
