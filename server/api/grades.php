@@ -14,7 +14,7 @@ if ($request['method'] === 'POST') {
   if(!isset($name) && !isset($course) && !isset($grade)){
     throw new ApiError("Missing one or more fields for new student", 400);
   }
-  $gradeId = add_grade($link, $name, $grade, $course);
+  $gradeId = add_grade($link, $name, intval($grade), $course);
   $response['body'] = [
     'name' => $name,
     'course' => $course,
