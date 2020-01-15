@@ -9,13 +9,13 @@ function FormInput(props) {
         </div>
       </div>
       <input
-        onChange={props.onChange}
-        onBlur = {props.onBlur}
-        value={props.value.input}
-        name={props.name}
-        className={'form-control ' + (props.value.isFocused ? (props.value.isValid ? 'is-valid' : 'is-invalid') : '')}
+        onChange={props.handleChange}
+        onBlur = {props.handleBlur}
+        value={props.fieldValue.input}
+        name={props.fieldName}
+        className={'form-control ' + (props.fieldValue.isFocused ? (props.fieldValue.isValid ? 'is-valid' : 'is-invalid') : '')}
         type="text"
-        placeholder={props.name[0].toUpperCase() + props.name.slice(1)} />
+        placeholder={props.fieldName[0].toUpperCase() + props.fieldName.slice(1)} />
     </div>
   );
 }
