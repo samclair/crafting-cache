@@ -1,3 +1,3 @@
 #!/bin/bash
-git pull origin dev
+git pull origin master
 npm run build

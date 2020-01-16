@@ -4,5 +4,5 @@ $db_params = [
   'user' => 'root',
   'pass' => 'root',
   'host' => 'localhost',
-  'database' => 'studentGrades'
+  'database' => 'craftingCache'
 ];
