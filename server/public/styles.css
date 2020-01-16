@@ -1,3 +1,7 @@
+html{
+  box-sizing: border-box;
+}
+
 .header{
   font-size: calc(.6rem + 1.4vw);
 }
