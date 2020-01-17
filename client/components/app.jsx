@@ -1,16 +1,19 @@
 import React from 'react';
-import Header from './header';
-import GradeTable from './gradetable';
-import GradeForm from './gradeform';
+import Navbar from './navbar';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      view: {
+        name: 'categories',
+        params: {}
+      },
       grades: []
     };
     this.addGrade = this.addGrade.bind(this);
     this.deleteGrade = this.deleteGrade.bind(this);
+    this.menuItems = ['All Inventory', 'Categories'];
   }
 
   componentDidMount() {
@@ -60,12 +63,8 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className='container'>
-        <Header text="Student Grade Table" averageGrade = {this.getAverageGrade()}/>
-        <div className="d-flex flex-row flex-lg-row flex-column-reverse">
-          <GradeTable grades = {this.state.grades} deleteGrade = {this.deleteGrade}/>
-          <GradeForm onSubmit = {this.addGrade}/>
-        </div>
+      <div>
+        <Navbar text="CraftingCache" menuItems = {this.menuItems}/>
       </div>
     );
   }
