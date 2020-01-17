@@ -1,11 +1,12 @@
 import React from 'react';
+import CategoryCard from './category-card';
 
 class CategoryList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       modalOn: false,
-      categoryList: []
+      categoryList: ['Fabric', 'Paint']
     };
   }
 
@@ -19,11 +20,13 @@ class CategoryList extends React.Component {
 
   render() {
     let modal = null;
-    let categoryCards = null;
+    let categoryCards = this.state.categoryList.map(category => {
+      return <CategoryCard categoryName = {category} key = {category}/>;
+    });
     if (this.state.modalOn) {
       modal = <div>modal goes here</div>;
     }
-    return (<div>Page goes here{modal}{categoryCards}</div>);
+    return (<div className='container'>Page goes here{modal}{categoryCards}</div>);
   }
 }
 
