@@ -1,6 +1,6 @@
 # student-grade-table
 
-A full stack JavaScript CMS for managing student grades and classes
+A full stack JavaScript CMS for managing your personal crafting inventory
 
 ## Technologies Used
 
@@ -12,18 +12,21 @@ A full stack JavaScript CMS for managing student grades and classes
 
 ## Live Demo
 
-Try the application live at <https://studentgrades.samcnagle.com>
+Coming Soon!
 
 ## Features
 
-- Users can view a list of all recorded grades.
-- Users can view the average of all grades.
-- Users can add a student and their grade to the table.
-- Users can delete a student and their grade from the table.
+- Users can add a new inventory list based on category.
+- Users can view a list of all custom added categories.
+- Users can view their crafting inventory by category.
+- Users can view all items in all crafting categories.
+- Users can add new items to a categories inventory.
+- Users can update the amount of an item.
+- Users can delete an item from their inventory table.
 
 ## Preview
 
-![SGT React](images/SGT-react.gif)
+Coming Soon!
 
 ## Development
 
