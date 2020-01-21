@@ -1,7 +1,14 @@
 import React from 'react';
 
 function CategoryCard(props) {
-  return (<div>Category is:{props.categoryName}</div>);
+  return (
+    <div className="card" style={{ width: '18rem', cursor: 'pointer' }}>
+      <div className="card-body">
+        <h5 className="card-title">{props.categoryName}</h5>
+        <h6 className="card-subtitle mb-2 text-muted">Inventory Count: </h6>
+        <p className="card-text">Example text</p>
+      </div>
+    </div>);
 }
 
 export default CategoryCard;
