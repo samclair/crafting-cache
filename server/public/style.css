@@ -20,3 +20,18 @@ html{
 .table-header-font{
  font-size: calc(.6rem + .4vw);
 }
+
+.custom-button{
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  background-color: cornflowerblue;
+  color: white;
+  border-radius: .3rem;
+  user-select: none;
+}
+
+.custom-button:active{
+  background-color: steelblue;
+  top:2px;
+}

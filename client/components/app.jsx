@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from './navbar';
+import CategoryList from './category-list';
 
 class App extends React.Component {
   constructor(props) {
@@ -62,10 +63,15 @@ class App extends React.Component {
   }
 
   render() {
+    let pageDisplay = null;
+    if (this.state.view.name === 'categories') {
+      pageDisplay = <CategoryList/>;
+    }
     return (
-      <div>
+      <>
         <Navbar text="CraftingCache" menuItems = {this.menuItems}/>
-      </div>
+        {pageDisplay}
+      </>
     );
   }
 }
