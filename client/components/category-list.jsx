@@ -8,7 +8,7 @@ class CategoryList extends React.Component {
     super(props);
     this.state = {
       view: { showForm: false, showButton: true },
-      categoryList: ['Fabric', 'Paint', 'Glitter', 'Spandex', 'Rayon', 'Brushes']
+      categoryList: []
     };
     this.addCategory = this.addCategory.bind(this);
     this.showForm = this.showForm.bind(this);
@@ -43,9 +43,9 @@ class CategoryList extends React.Component {
   render() {
     let categoryForm = this.state.view.showForm ? <CategoryForm onCancel = {this.hideForm} onSubmit = {this.addCategory}/> : null;
     let formButton = this.state.view.showButton ? <Button handleClick={this.showForm} text='Add Category' /> : null;
-    let categoryCards = this.state.categoryList.map(category => {
+    let categoryCards = this.state.categoryList.length ? this.state.categoryList.map(category => {
       return <CategoryCard categoryName = {category} key = {category}/>;
-    });
+    }) : <div>You do not currently have any categories :(</div>;
     return (
       <div className='container'>
         <div className="row my-3">
