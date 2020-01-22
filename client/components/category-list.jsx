@@ -15,6 +15,10 @@ class CategoryList extends React.Component {
     this.hideForm = this.hideForm.bind(this);
   }
 
+  componentDidMount() {
+    this.getCategories();
+  }
+
   addCategory(categoryName) {
     const fetchConfig = {
       method: 'POST',
@@ -23,13 +27,15 @@ class CategoryList extends React.Component {
     };
     fetch('api/categories', fetchConfig)
       .then(res => res.json())
-      .then(categoryName => this.setState({
-        categoryList: this.state.grades.concat(categoryName) }
+      .then(category => this.setState({
+        categoryList: this.state.grades.concat(category) }
       ));
   }
 
   getCategories() {
-    // get request to backend to get categories from user
+    fetch('api/categories')
+      .then(res => res.json())
+      .then(categories => this.setState({ categoryList: categories }));
   }
 
   showForm() {
@@ -44,7 +50,7 @@ class CategoryList extends React.Component {
     let categoryForm = this.state.view.showForm ? <CategoryForm onCancel = {this.hideForm} onSubmit = {this.addCategory}/> : null;
     let formButton = this.state.view.showButton ? <Button handleClick={this.showForm} text='Add Category' /> : null;
     let categoryCards = this.state.categoryList.length ? this.state.categoryList.map(category => {
-      return <CategoryCard categoryName = {category} key = {category}/>;
+      return <CategoryCard categoryName = {category.categoryName} key = {category.categoryName}/>;
     }) : <div>You do not currently have any categories :(</div>;
     return (
       <div className='container'>
