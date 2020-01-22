@@ -12,6 +12,7 @@ class CategoryList extends React.Component {
     };
     this.addCategory = this.addCategory.bind(this);
     this.showForm = this.showForm.bind(this);
+    this.hideForm = this.hideForm.bind(this);
   }
 
   addCategory(categoryName) {
@@ -23,8 +24,7 @@ class CategoryList extends React.Component {
     fetch('api/categories', fetchConfig)
       .then(res => res.json())
       .then(categoryName => this.setState({
-        categoryList: this.state.grades.concat(categoryName),
-        view: { showForm: false, showButton: true } }
+        categoryList: this.state.grades.concat(categoryName) }
       ));
   }
 
@@ -36,8 +36,12 @@ class CategoryList extends React.Component {
     this.setState({ view: { showForm: true, showButton: false } });
   }
 
+  hideForm() {
+    this.setState({ view: { showForm: false, showButton: true } });
+  }
+
   render() {
-    let categoryForm = this.state.view.showForm ? <CategoryForm onSubmit = {this.addCategory}/> : null;
+    let categoryForm = this.state.view.showForm ? <CategoryForm onCancel = {this.hideForm} onSubmit = {this.addCategory}/> : null;
     let formButton = this.state.view.showButton ? <Button handleClick={this.showForm} text='Add Category' /> : null;
     let categoryCards = this.state.categoryList.map(category => {
       return <CategoryCard categoryName = {category} key = {category}/>;

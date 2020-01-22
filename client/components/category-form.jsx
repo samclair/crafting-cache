@@ -17,6 +17,7 @@ class CategoryForm extends React.Component {
   handleClear() {
     this.setState({
       category: { input: '' } });
+    this.props.onCancel();
   }
 
   handleSubmit(event) {
