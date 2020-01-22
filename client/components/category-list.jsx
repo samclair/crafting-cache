@@ -28,14 +28,26 @@ class CategoryList extends React.Component {
     fetch('api/categories', fetchConfig)
       .then(res => res.json())
       .then(category => this.setState({
-        categoryList: this.state.grades.concat(category) }
-      ));
+        categoryList: this.state.categoryList.concat(category) })
+      );
   }
 
   getCategories() {
     fetch('api/categories')
       .then(res => res.json())
       .then(categories => this.setState({ categoryList: categories }));
+  }
+
+  deleteCategory(category) {
+    const fetchConfig = {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ category: category })
+    };
+    var newCategories = this.state.categoryList.filter(category => category.categoryName !== category);
+    fetch('api/caetgory', fetchConfig)
+      .then(() => this.setState({ categoryList: newCategories }))
+      .catch(error => console.error(error.message));
   }
 
   showForm() {
