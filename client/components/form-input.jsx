@@ -1,13 +1,14 @@
 import React from 'react';
 
 function FormInput(props) {
+  let formIcon = props.symbol ? (<div className="input-group-prepend">
+    <div className="input-group-text">
+      <i className={'fas ' + props.symbol}></i>
+    </div>
+  </div>) : null;
   return (
     <div className="input-group mb-2">
-      <div className="input-group-prepend">
-        <div className="input-group-text">
-          <i className={'fas ' + props.symbol}></i>
-        </div>
-      </div>
+      {formIcon}
       <input
         onChange={props.handleChange}
         onBlur = {props.handleBlur}
