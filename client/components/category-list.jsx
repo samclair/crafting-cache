@@ -11,6 +11,7 @@ class CategoryList extends React.Component {
       categoryList: []
     };
     this.addCategory = this.addCategory.bind(this);
+    this.deleteCategory = this.deleteCategory.bind(this);
     this.showForm = this.showForm.bind(this);
     this.hideForm = this.hideForm.bind(this);
   }
@@ -38,14 +39,14 @@ class CategoryList extends React.Component {
       .then(categories => this.setState({ categoryList: categories }));
   }
 
-  deleteCategory(category) {
+  deleteCategory(categoryName) {
     const fetchConfig = {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ category: category })
+      body: JSON.stringify({ category: categoryName })
     };
-    var newCategories = this.state.categoryList.filter(category => category.categoryName !== category);
-    fetch('api/caetgory', fetchConfig)
+    var newCategories = this.state.categoryList.filter(category => category.categoryName !== categoryName);
+    fetch('api/categories', fetchConfig)
       .then(() => this.setState({ categoryList: newCategories }))
       .catch(error => console.error(error.message));
   }
@@ -60,9 +61,9 @@ class CategoryList extends React.Component {
 
   render() {
     let categoryForm = this.state.view.showForm ? <CategoryForm onCancel = {this.hideForm} onSubmit = {this.addCategory}/> : null;
-    let formButton = this.state.view.showButton ? <Button handleClick={this.showForm} text='Add Category' /> : null;
+    let formButton = this.state.view.showButton ? <Button color='add-button' handleClick={this.showForm} symbol= 'fa-plus-square' text='Add Category' /> : null;
     let categoryCards = this.state.categoryList.length ? this.state.categoryList.map(category => {
-      return <CategoryCard categoryName = {category.categoryName} key = {category.categoryName}/>;
+      return <CategoryCard handleDelete = {this.deleteCategory}categoryName = {category.categoryName} key = {category.categoryName}/>;
     }) : <div>You do not currently have any categories :(</div>;
     return (
       <div className='container'>
