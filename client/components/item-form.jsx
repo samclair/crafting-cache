@@ -1,11 +1,13 @@
 import React from 'react';
 import FormInput from './form-input';
 
-class CategoryForm extends React.Component {
+class ItemForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      category: { input: '', isValid: false, isFocused: false }
+      name: { input: '', isValid: false, isFocused: false },
+      amount: { input: '', isValid: false, isFocused: false },
+      notes: { input: '', isValid: false, isFocused: false }
     };
     this.textPattern = /^[A-Za-z \d]{3,64}$/;
     this.handleChange = this.handleChange.bind(this);
@@ -16,15 +18,22 @@ class CategoryForm extends React.Component {
 
   handleClear() {
     this.setState({
-      category: { input: '' } });
-    this.props.onCancel();
+      name: { input: '' },
+      amount: { input: '' },
+      notes: { input: '' }
+    });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    if (this.state.category.input.match(this.textPattern)) {
+    if (this.state.name.input.match(this.textPattern) &&
+      this.state.amount.input.match(this.textPattern) &&
+      this.state.notes.input.match(this.textPattern)) {
       this.props.onSubmit({
-        category: this.state.category.input
+        itemName: this.state.name.input,
+        amount: this.state.amount.input,
+        notes: this.state.notes.input,
+        id: 1
       });
       this.handleClear();
     }
@@ -46,11 +55,25 @@ class CategoryForm extends React.Component {
       <form onSubmit={this.handleSubmit}>
         <div className="form-group">
           <FormInput
-            handleChange = {this.handleChange}
-            handleBlur = {this.handleBlur}
-            symbol = "fa-book"
-            fieldName = "category"
-            fieldValue = {this.state.category}
+            handleChange={this.handleChange}
+            handleBlur={this.handleBlur}
+            symbol="fa-cut"
+            fieldName="name"
+            fieldValue={this.state.name}
+          />
+          <FormInput
+            handleChange={this.handleChange}
+            handleBlur={this.handleBlur}
+            symbol="fa-coins"
+            fieldName="amount"
+            fieldValue={this.state.amount}
+          />
+          <FormInput
+            handleChange={this.handleChange}
+            handleBlur={this.handleBlur}
+            symbol="fa-sticky-note"
+            fieldName="notes"
+            fieldValue={this.state.notes}
           />
           <button type="submit" onClick={this.handleSubmit} className="btn btn-success mr-1">Add</button>
           <button type="button" onClick={this.handleClear} className="btn btn-secondary">Cancel</button>
@@ -60,4 +83,4 @@ class CategoryForm extends React.Component {
   }
 }
 
-export default CategoryForm;
+export default ItemForm;
