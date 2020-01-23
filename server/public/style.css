@@ -24,14 +24,20 @@ html{
 .custom-button{
   position: relative;
   cursor: pointer;
-  display: inline-block;
-  background-color: cornflowerblue;
+  display: inline;
   color: white;
   border-radius: .3rem;
   user-select: none;
 }
 
 .custom-button:active{
-  background-color: steelblue;
   top:2px;
+}
+
+.add-button{
+  background-color: cornflowerblue;
+}
+
+.delete-button{
+  background-color: red;
 }

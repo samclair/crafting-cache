@@ -1,9 +1,10 @@
 import React from 'react';
 
 function Button(props) {
-  return <div onClick={props.handleClick} className = 'px-2 py-1 custom-button d-flex align-items-center'>
-    <i className="fas fa-plus-square mr-2"></i>
-    {props.text}
+  let text = props.text ? <span className='ml-2'>{props.text}</span> : null;
+  return <div onClick={props.handleClick} className = {`${props.color} px-2 py-1 custom-button d-flex align-items-center`}>
+    <i className={`fas ${props.symbol}`}></i>
+    {text}
   </div>;
 }
 
