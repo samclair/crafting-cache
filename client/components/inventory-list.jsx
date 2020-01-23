@@ -1,5 +1,6 @@
 import React from 'react';
 import InventoryTable from './inventory-table';
+import ItemForm from './item-form';
 
 class InventoryList extends React.Component {
   constructor(props) {
@@ -24,6 +25,27 @@ class InventoryList extends React.Component {
       }
       ]
     };
+    this.addItem = this.addItem.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
+  }
+
+  componentDidMount() {
+    this.getInventory();
+  }
+
+  getInventory() {
+    return null;
+  }
+
+  addItem(item) {
+    // eslint-disable-next-line no-console
+    console.log(item);
+    this.setState({ inventoryList: this.state.inventoryList.concat(item) });
+  }
+
+  deleteItem(id) {
+    // eslint-disable-next-line no-console
+    console.log(this.state.inventoryList.filter(item => item.id === id));
   }
 
   render() {
@@ -34,6 +56,7 @@ class InventoryList extends React.Component {
         </div>
         <div className="d-flex flex-row flex-lg-row flex-column-reverse">
           <InventoryTable inventory={this.state.inventoryList}/>
+          <ItemForm onSubmit = {this.addItem}/>
         </div>
       </div>);
   }
