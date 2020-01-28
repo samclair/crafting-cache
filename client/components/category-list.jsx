@@ -63,7 +63,7 @@ class CategoryList extends React.Component {
     let categoryForm = this.state.view.showForm ? <CategoryForm onCancel = {this.hideForm} onSubmit = {this.addCategory}/> : null;
     let formButton = this.state.view.showButton ? <Button color='add-button' handleClick={this.showForm} symbol= 'fa-plus-square' text='Add Category' /> : null;
     let categoryCards = this.state.categoryList.length ? this.state.categoryList.map(category => {
-      return <CategoryCard handleDelete = {this.deleteCategory}categoryName = {category.categoryName} key = {category.categoryName}/>;
+      return <CategoryCard handleDelete = {this.deleteCategory}categoryName = {category.categoryName} key = {category.categoryId}/>;
     }) : <div>You do not currently have any categories :(</div>;
     return (
       <div className='container'>

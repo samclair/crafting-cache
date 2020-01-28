@@ -34,7 +34,10 @@ class InventoryList extends React.Component {
   }
 
   getInventory() {
-    return null;
+    fetch('api/inventory?categoryId=24')
+      .then(res => res.json())
+      .then(inventory => this.setState({ inventoryList: inventory }));
+
   }
 
   addItem(item) {

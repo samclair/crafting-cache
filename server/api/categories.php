@@ -44,7 +44,7 @@ function delete_category($link, $category){
 function get_all_categories($link)
 {
   $sql = "
-  SELECT `categoryName`
+  SELECT `categoryName`, `categoryId`
   FROM `categories`
   WHERE `userId`=1";
   $result = mysqli_query($link, $sql);
