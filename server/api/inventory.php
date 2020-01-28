@@ -3,25 +3,24 @@
 $link = get_db_link();
 
 if ($request['method'] === 'GET') {
-  $category = $request['query']['category'];
-  if(!isset($category)){
-    throw new ApiError("Missing category from query param");
+  $categoryId = $request['query']['categoryId'];
+  if(!isset($categoryId)){
+    throw new ApiError("Missing categoryId from query param");
   }
-  $response['body'] = get_category_inventory($link,$category);
+  $response['body'] = get_category_inventory($link,$categoryId);
   send($response);
 }
 
-function get_category_inventory($link,$category)
-{
+function get_category_inventory($link,$categoryId){
   $sql = "
-  SELECT `i`.`itemName` as `name`,
+  SELECT `i`.`itemName` as `itemName`,
   `i`.`itemId` as `id`,
   CONCAT(`i`.`unitId`,' ',`u`.`unitName`) as `amount`,
   `i`.`notes`
   FROM `inventory` AS `i`
   JOIN `units` AS `u` ON `u`.`unitId` = `i`.`unitId`
   JOIN `categories` AS `c` ON `c`.`categoryId`=`i`.`categoryId`
-  WHERE `i`.`userId` = 1 AND `c`.`categoryName` = '{$category}'";
+  WHERE `i`.`userId` = 1 AND `c`.`categoryId` = '{$categoryId}'";
   $result = mysqli_query($link, $sql);
   return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
