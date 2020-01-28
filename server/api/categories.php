@@ -7,8 +7,6 @@ if ($request['method'] === 'GET') {
   send($response);
 }
 
-
-
 if ($request['method'] === 'POST') {
   $category = $request['body']['category'];
   if (!isset($category)) {
