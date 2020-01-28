@@ -7,6 +7,7 @@ class ItemForm extends React.Component {
     this.state = {
       name: { input: '', isValid: false, isFocused: false },
       amount: { input: '', isValid: false, isFocused: false },
+      unit: { input: '1', isValid: false, isFocused: false },
       notes: { input: '', isValid: false, isFocused: false }
     };
     this.textPattern = /^[A-Za-z \d]{3,64}$/;
@@ -67,6 +68,12 @@ class ItemForm extends React.Component {
             symbol="fa-coins"
             fieldName="amount"
             fieldValue={this.state.amount}
+            optionalField={(
+              <select name='unit' type='select' onChange = {this.handleChange} >
+                <option value="1">pound</option>
+                <option value="2">ounce</option>
+                <option value="3">unit</option>
+              </select>)}
           />
           <FormInput
             handleChange={this.handleChange}

@@ -15,7 +15,7 @@ function get_category_inventory($link,$categoryId){
   $sql = "
   SELECT `i`.`itemName` as `itemName`,
   `i`.`itemId` as `id`,
-  CONCAT(`i`.`unitId`,' ',`u`.`unitName`) as `amount`,
+  CONCAT(`i`.`amount`,' ',`u`.`unitName`) as `amount`,
   `i`.`notes`
   FROM `inventory` AS `i`
   JOIN `units` AS `u` ON `u`.`unitId` = `i`.`unitId`
