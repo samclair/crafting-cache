@@ -12,18 +12,25 @@ class App extends React.Component {
         params: {}
       }
     };
+    this.switchView = this.switchView.bind(this);
+  }
+
+  switchView(viewName, viewParams) {
+    this.setState({ view: { name: viewName, params: viewParams } });
   }
 
   render() {
     let pageDisplay = null;
     if (this.state.view.name === 'categories') {
-      pageDisplay = <CategoryList/>;
+      pageDisplay = <CategoryList handleNav = {this.switchView}/>;
     } else if (this.state.view.name === 'inventory') {
-      pageDisplay = <InventoryList/>;
+      pageDisplay = <InventoryList categoryId = {this.state.view.params.categoryId}/>;
     }
     return (
       <>
-        <Navbar text="CraftingCache" menuItems = {this.menuItems}/>
+        <Navbar text="CraftingCache"
+          menuItems = {this.menuItems}
+          handleClick={this.switchView}/>
         {pageDisplay}
       </>
     );

@@ -6,35 +6,21 @@ class InventoryList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      inventoryList: [{
-        itemName: 'Black Paint',
-        amount: '1 unit',
-        notes: 'Use for upcoming festival',
-        id: 1 },
-      {
-        itemName: 'Red Paint',
-        amount: '2 units',
-        notes: 'Use for upcoming festival',
-        id: 2
-      },
-      {
-        itemName: 'Blue Paint',
-        amount: '4 units',
-        notes: 'Use for upcoming festival',
-        id: 3
-      }
-      ]
+      inventoryList: []
     };
     this.addItem = this.addItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
   }
 
   componentDidMount() {
-    this.getInventory();
+    this.getInventory(this.props.categoryId);
   }
 
-  getInventory() {
-    return null;
+  getInventory(categoryId) {
+    fetch(`api/inventory?categoryId=${categoryId}`)
+      .then(res => res.json())
+      .then(inventory => this.setState({ inventoryList: inventory }));
+
   }
 
   addItem(item) {

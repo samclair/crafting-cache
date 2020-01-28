@@ -9,6 +9,7 @@ html{
   background-color: darkorange;
   font-size: calc(.6rem + 1.4vw);
   color: white;
+  cursor: pointer;
 }
 
 .menu-heading{

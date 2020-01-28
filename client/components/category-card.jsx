@@ -3,7 +3,9 @@ import Button from './button';
 
 function CategoryCard(props) {
   return (
-    <div className="card mx-3 my-3" style={{ width: '18rem', cursor: 'pointer' }}>
+    <div onClick = {() => props.handleClick('inventory', { categoryId: props.categoryId })}
+      className="card mx-3 my-3"
+      style={{ width: '18rem', cursor: 'pointer' }}>
       <div className="card-body">
         <div className="container row d-flex align-items-center">
           <h5 className="card-title mr-auto">{props.categoryName}</h5>
