@@ -39,7 +39,6 @@ class InventoryList extends React.Component {
   }
 
   deleteItem(id) {
-    // eslint-disable-next-line no-console
     const fetchConfig = {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
