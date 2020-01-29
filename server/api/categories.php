@@ -21,9 +21,9 @@ if ($request['method'] === 'POST') {
 }
 
 if ($request['method'] === 'DELETE'){
-  $category = $request['body']['category'];
+  $category = $request['body']['categoryId'];
   if (!isset($category)) {
-    throw new ApiError("Missing category name", 400);
+    throw new ApiError("Missing categoryId", 400);
   }
   delete_category($link, $category);
   $response['body'] = [
@@ -32,11 +32,11 @@ if ($request['method'] === 'DELETE'){
   send($response);
 }
 
-function delete_category($link, $category){
+function delete_category($link, $category_id){
   $sql = "
   DELETE
   FROM `categories`
-  WHERE `categories`.`categoryName`='$category'";
+  WHERE `categories`.`categoryId`='$category_id'";
   mysqli_query($link, $sql);
 }
 

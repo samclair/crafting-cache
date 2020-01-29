@@ -39,13 +39,13 @@ class CategoryList extends React.Component {
       .then(categories => this.setState({ categoryList: categories }));
   }
 
-  deleteCategory(categoryName) {
+  deleteCategory(categoryId) {
     const fetchConfig = {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ category: categoryName })
+      body: JSON.stringify({ categoryId: categoryId })
     };
-    var newCategories = this.state.categoryList.filter(category => category.categoryName !== categoryName);
+    var newCategories = this.state.categoryList.filter(category => category.categoryId !== categoryId);
     fetch('api/categories', fetchConfig)
       .then(() => this.setState({ categoryList: newCategories }))
       .catch(error => console.error(error.message));
