@@ -12,17 +12,18 @@ if ($request['method'] === 'POST') {
   if (!isset($category)) {
     throw new ApiError("Missing category name", 400);
   }
-  add_category($link, $category);
+  $new_category_id  = add_category($link, $category);
   $response['body'] = [
     'categoryName' => $category,
+    'categoryId' => $new_category_id
   ];
   send($response);
 }
 
 if ($request['method'] === 'DELETE'){
-  $category = $request['body']['category'];
+  $category = $request['body']['categoryId'];
   if (!isset($category)) {
-    throw new ApiError("Missing category name", 400);
+    throw new ApiError("Missing categoryId", 400);
   }
   delete_category($link, $category);
   $response['body'] = [
@@ -31,11 +32,11 @@ if ($request['method'] === 'DELETE'){
   send($response);
 }
 
-function delete_category($link, $category){
+function delete_category($link, $category_id){
   $sql = "
   DELETE
   FROM `categories`
-  WHERE `categories`.`categoryName`='$category'";
+  WHERE `categories`.`categoryId`='$category_id'";
   mysqli_query($link, $sql);
 }
 
@@ -54,4 +55,5 @@ function add_category($link, $category)
   $sql = "INSERT INTO `categories` (`categoryId`, `categoryName`, `userId`)
   VALUES (NULL, '$category', '1')";
   mysqli_query($link, $sql);
+  return mysqli_insert_id($link);
 }
