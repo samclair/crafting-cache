@@ -34,7 +34,7 @@ class ItemForm extends React.Component {
         itemName: this.state.name.input,
         amount: this.state.amount.input,
         notes: this.state.notes.input,
-        id: 1
+        unitId: this.state.unit.input
       });
       this.handleClear();
     }
@@ -70,9 +70,7 @@ class ItemForm extends React.Component {
             fieldValue={this.state.amount}
             optionalField={(
               <select name='unit' type='select' onChange = {this.handleChange} >
-                <option value="1">pound</option>
-                <option value="2">ounce</option>
-                <option value="3">unit</option>
+                {this.props.unitList.map(unit => <option key={unit.unitId} value={unit.unitId}>{unit.unitName}</option>)}
               </select>)}
           />
           <FormInput

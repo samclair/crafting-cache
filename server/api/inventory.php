@@ -7,7 +7,10 @@ if ($request['method'] === 'GET') {
   if(!isset($categoryId)){
     throw new ApiError("Missing categoryId from query param");
   }
-  $response['body'] = get_category_inventory($link,$categoryId);
+  $response['body'] = [
+    "inventory" => get_category_inventory($link,$categoryId),
+    "units" => get_units($link)
+  ];
   send($response);
 }
 else if ($request['method'] === 'POST'){
@@ -37,7 +40,13 @@ function get_category_inventory($link,$categoryId){
   return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
-function add_new_item($link,$itemName, $amount, $unitId, $categoryId,$notes){
+function get_units($link){
+  $sql = "SELECT * from units";
+  $result = mysqli_query($link, $sql);
+  return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
+function add_new_item($link, $itemName, $amount, $unitId, $categoryId,$notes){
   $sql = "INSERT INTO `inventory`
   (`itemId`, `itemName`, `amount`, `userId`, `unitId`, `categoryId`, `notes`)
   VALUES
