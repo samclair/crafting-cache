@@ -24,6 +24,18 @@ else if ($request['method'] === 'POST'){
   send($response);
 }
 
+else if ($request['method'] === 'DELETE'){
+  $item_id = $request['body']['itemId'];
+  if (!isset($item_id)){
+    throw new ApiError("Missing itemId from DELETE request");
+  }
+  delete_item($link, $item_id);
+  $response['body'] = [
+    'message' => "Item successfully deleted"
+  ];
+  send($response);
+}
+
 function get_category_inventory($link,$category_id){
   $sql = "
   SELECT `i`.`itemName` as `itemName`,
@@ -54,7 +66,7 @@ function add_new_item($link, $item_name, $amount, $unit_id, $category_id,$notes)
   return get_inventory_item($link, $new_item_id);
 }
 
-function get_inventory_item($link, $id){
+function get_inventory_item($link, $item_id){
   $sql = "
   SELECT `i`.`itemName` as `itemName`,
   `i`.`itemId` as `id`,
@@ -62,7 +74,15 @@ function get_inventory_item($link, $id){
   `i`.`notes`
   FROM `inventory` AS `i`
   JOIN `units` AS `u` ON `u`.`unitId` = `i`.`unitId`
-  WHERE `i`.`itemId` = '$id' ";
+  WHERE `i`.`itemId` = '$item_id' ";
   $result = mysqli_query($link, $sql);
   return mysqli_fetch_object($result);
+}
+
+function delete_item($link, $item_id){
+  $sql = "
+  DELETE
+  FROM `inventory`
+  WHERE `itemId` = '$item_id'";
+  mysqli_query($link, $sql);
 }
