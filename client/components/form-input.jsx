@@ -6,6 +6,7 @@ function FormInput(props) {
       <i className={'fas ' + props.symbol}></i>
     </div>
   </div>) : null;
+  let optionalField = props.optionalField ? props.optionalField : null;
   return (
     <div className="input-group mb-2">
       {formIcon}
@@ -17,6 +18,7 @@ function FormInput(props) {
         className={'form-control ' + (props.fieldValue.isFocused ? (props.fieldValue.isValid ? 'is-valid' : 'is-invalid') : '')}
         type="text"
         placeholder={props.fieldName[0].toUpperCase() + props.fieldName.slice(1)} />
+      {optionalField}
     </div>
   );
 }

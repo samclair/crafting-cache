@@ -6,27 +6,36 @@ class InventoryList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      inventoryList: []
+      inventoryList: [],
+      unitList: []
     };
     this.addItem = this.addItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
   }
 
   componentDidMount() {
-    this.getInventory(this.props.categoryId);
+    this.getTableData(this.props.categoryId);
   }
 
-  getInventory(categoryId) {
+  getTableData(categoryId) {
     fetch(`api/inventory?categoryId=${categoryId}`)
       .then(res => res.json())
-      .then(inventory => this.setState({ inventoryList: inventory }));
-
+      .then(data => this.setState({ inventoryList: data.inventory, unitList: data.units }));
   }
 
   addItem(item) {
-    // eslint-disable-next-line no-console
-    console.log(item);
-    this.setState({ inventoryList: this.state.inventoryList.concat(item) });
+    item.categoryId = this.props.categoryId;
+    const fetchConfig = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(item)
+    };
+    fetch('api/inventory', fetchConfig)
+      .then(res => res.json())
+      .then(inventory => this.setState({
+        inventoryList: this.state.inventoryList.concat(item)
+      })
+      );
   }
 
   deleteItem(id) {
@@ -42,7 +51,7 @@ class InventoryList extends React.Component {
         </div>
         <div className="d-flex flex-row flex-lg-row flex-column-reverse">
           <InventoryTable inventory={this.state.inventoryList}/>
-          <ItemForm onSubmit = {this.addItem}/>
+          <ItemForm unitList = {this.state.unitList} onSubmit = {this.addItem}/>
         </div>
       </div>);
   }
