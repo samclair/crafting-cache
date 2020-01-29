@@ -32,8 +32,8 @@ class InventoryList extends React.Component {
     };
     fetch('api/inventory', fetchConfig)
       .then(res => res.json())
-      .then(inventory => this.setState({
-        inventoryList: this.state.inventoryList.concat(item)
+      .then(newItem => this.setState({
+        inventoryList: this.state.inventoryList.concat(newItem)
       })
       );
   }

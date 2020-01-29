@@ -19,10 +19,8 @@ else if ($request['method'] === 'POST'){
   $unitId = $request['body']['unitId'];
   $categoryId = $request['body']['categoryId'];
   $notes = $request['body']['notes'];
-  add_new_item($link, $itemName, $amount, $unitId, $categoryId,$notes);
-  $response['body'] = [
-    'message' => "Item successfully added"
-  ];
+  $newItem = add_new_item($link, $itemName, $amount, $unitId, $categoryId,$notes);
+  $response['body'] = $newItem;
   send($response);
 }
 
@@ -52,4 +50,19 @@ function add_new_item($link, $itemName, $amount, $unitId, $categoryId,$notes){
   VALUES
   (NULL,'$itemName', '$amount','1','$unitId','$categoryId','$notes')";
   mysqli_query($link, $sql);
+  $newItemId = mysqli_insert_id($link);
+  return get_inventory_item($link, $newItemId);
+}
+
+function get_inventory_item($link, $id){
+  $sql = "
+  SELECT `i`.`itemName` as `itemName`,
+  `i`.`itemId` as `id`,
+  CONCAT(`i`.`amount`,' ',`u`.`unitName`) as `amount`,
+  `i`.`notes`
+  FROM `inventory` AS `i`
+  JOIN `units` AS `u` ON `u`.`unitId` = `i`.`unitId`
+  WHERE `i`.`itemId` = '$id' ";
+  $result = mysqli_query($link, $sql);
+  return mysqli_fetch_object($result);
 }

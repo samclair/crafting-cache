@@ -8,7 +8,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       view: {
-        name: 'inventory',
+        name: 'categories',
         params: {}
       }
     };
