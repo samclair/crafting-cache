@@ -39,8 +39,15 @@ class InventoryList extends React.Component {
   }
 
   deleteItem(id) {
-    // eslint-disable-next-line no-console
-    console.log(this.state.inventoryList.filter(item => item.id === id));
+    const fetchConfig = {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ itemId: id })
+    };
+    let newInventory = this.state.inventoryList.filter(item => item.id !== id);
+    fetch('api/inventory', fetchConfig)
+      .then(res => res.json())
+      .then(data => this.setState({ inventoryList: newInventory }));
   }
 
   render() {
@@ -50,7 +57,7 @@ class InventoryList extends React.Component {
           <h2 className='menu-heading'>Inventory List</h2>
         </div>
         <div className="d-flex flex-row flex-lg-row flex-column-reverse">
-          <InventoryTable inventory={this.state.inventoryList}/>
+          <InventoryTable inventory={this.state.inventoryList} handleDelete = {this.deleteItem}/>
           <ItemForm unitList = {this.state.unitList} onSubmit = {this.addItem}/>
         </div>
       </div>);
