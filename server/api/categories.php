@@ -12,9 +12,10 @@ if ($request['method'] === 'POST') {
   if (!isset($category)) {
     throw new ApiError("Missing category name", 400);
   }
-  add_category($link, $category);
+  $new_category_id  = add_category($link, $category);
   $response['body'] = [
     'categoryName' => $category,
+    'categoryId' => $new_category_id
   ];
   send($response);
 }
@@ -54,4 +55,5 @@ function add_category($link, $category)
   $sql = "INSERT INTO `categories` (`categoryId`, `categoryName`, `userId`)
   VALUES (NULL, '$category', '1')";
   mysqli_query($link, $sql);
+  return mysqli_insert_id($link);
 }
