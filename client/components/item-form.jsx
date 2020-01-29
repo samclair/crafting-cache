@@ -10,7 +10,7 @@ class ItemForm extends React.Component {
       unit: { input: '1', isValid: false, isFocused: false },
       notes: { input: '', isValid: false, isFocused: false }
     };
-    this.textPattern = /^[A-Za-z \d]{3,64}$/;
+    this.textPattern = /^[A-Za-z \d]{3,150}$/;
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClear = this.handleClear.bind(this);
@@ -28,7 +28,7 @@ class ItemForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     if (this.state.name.input.match(this.textPattern) &&
-      this.state.amount.input.match(this.textPattern) &&
+      !isNaN(this.state.amount.input) &&
       this.state.notes.input.match(this.textPattern)) {
       this.props.onSubmit({
         itemName: this.state.name.input,
@@ -42,7 +42,7 @@ class ItemForm extends React.Component {
 
   handleChange(event) {
     var input = event.target.value;
-    var isValid = this.textPattern.test(input);
+    var isValid = event.target.name === 'amount' ? !isNaN(input) && parseFloat(input) : this.textPattern.test(input);
     this.setState({ [event.target.name]: { input: input, isValid: isValid, isFocused: true } });
   }
 
