@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from './button';
 
 function InventoryRow(props) {
   const item = props.item;
@@ -8,7 +9,7 @@ function InventoryRow(props) {
       <td>{formatUnits(item.amount)}</td>
       <td>{item.notes}</td>
       <td className="align-middle">
-        Delete/Edit
+        <Button color='delete-button mb-auto align-self-left' symbol='fa-times' handleClick={() => props.handleDelete(item.id)} text='' />
       </td>
     </tr>
   );
