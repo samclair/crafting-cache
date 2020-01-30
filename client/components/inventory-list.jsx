@@ -52,6 +52,7 @@ class InventoryList extends React.Component {
   }
 
   editItem(itemUpdate) {
+    itemUpdate.amountString = `${itemUpdate.amount} ${this.state.unitList[itemUpdate.unitId - 1].unitName}`;
     const fetchConfig = {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
