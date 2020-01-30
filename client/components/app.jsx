@@ -24,7 +24,7 @@ class App extends React.Component {
     if (this.state.view.name === 'categories') {
       pageDisplay = <CategoryList handleNav = {this.switchView}/>;
     } else if (this.state.view.name === 'inventory') {
-      pageDisplay = <InventoryList categoryId = {this.state.view.params.categoryId}/>;
+      pageDisplay = <InventoryList categoryId={this.state.view.params.categoryId} categoryName={this.state.view.params.categoryName}/>;
     }
     return (
       <>
