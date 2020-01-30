@@ -40,7 +40,9 @@ function get_category_inventory($link,$category_id){
   $sql = "
   SELECT `i`.`itemName` as `itemName`,
   `i`.`itemId` as `id`,
-  CONCAT(`i`.`amount`,' ',`u`.`unitName`) as `amount`,
+  CONCAT(`i`.`amount`,' ',`u`.`unitName`) as `amountString`,
+  `i`.`unitId`,
+  `i`.`amount`,
   `i`.`notes`
   FROM `inventory` AS `i`
   JOIN `units` AS `u` ON `u`.`unitId` = `i`.`unitId`
@@ -70,7 +72,9 @@ function get_inventory_item($link, $item_id){
   $sql = "
   SELECT `i`.`itemName` as `itemName`,
   `i`.`itemId` as `id`,
-  CONCAT(`i`.`amount`,' ',`u`.`unitName`) as `amount`,
+  CONCAT(`i`.`amount`,' ',`u`.`unitName`) as `amountString`,
+  `i`.`unitId`,
+  `i`.`amount`,
   `i`.`notes`
   FROM `inventory` AS `i`
   JOIN `units` AS `u` ON `u`.`unitId` = `i`.`unitId`
