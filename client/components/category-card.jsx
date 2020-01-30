@@ -80,7 +80,7 @@ class CategoryCard extends React.Component {
           <h6 className="card-subtitle mb-2 text-muted">Inventory Count: </h6>
           <a href='#'
             className="card-text pointer"
-            onClick={() => this.props.handleClick('inventory', { categoryId: this.props.categoryId })}>View Inventory</a>
+            onClick={() => this.props.handleClick('inventory', { categoryId: this.props.categoryId, categoryName: this.props.categoryName })}>View Inventory</a>
         </div>
       </div>);
   }
