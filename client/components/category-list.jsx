@@ -14,6 +14,7 @@ class CategoryList extends React.Component {
     this.deleteCategory = this.deleteCategory.bind(this);
     this.showForm = this.showForm.bind(this);
     this.hideForm = this.hideForm.bind(this);
+    this.editCategory = this.editCategory.bind(this);
   }
 
   componentDidMount() {
@@ -51,6 +52,20 @@ class CategoryList extends React.Component {
       .catch(error => console.error(error.message));
   }
 
+  editCategory(categoryUpdate) {
+    const fetchConfig = {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(categoryUpdate)
+    };
+    var oldCategoryIndex = this.state.categoryList.findIndex(category => category.categoryId === categoryUpdate.categoryId);
+    let newCategories = this.state.categoryList.slice();
+    newCategories[oldCategoryIndex] = categoryUpdate;
+    fetch('api/categories', fetchConfig)
+      .then(() => this.setState({ categoryList: newCategories }))
+      .catch(error => console.error(error.message));
+  }
+
   showForm() {
     this.setState({ view: { showForm: true, showButton: false } });
   }
@@ -63,8 +78,10 @@ class CategoryList extends React.Component {
     let categoryForm = this.state.view.showForm ? <CategoryForm onCancel = {this.hideForm} onSubmit = {this.addCategory}/> : null;
     let formButton = this.state.view.showButton ? <Button color='add-button' handleClick={this.showForm} symbol= 'fa-plus-square' text='Add Category' /> : null;
     let categoryCards = this.state.categoryList.length ? this.state.categoryList.map(category => {
-      return (<CategoryCard handleDelete = {this.deleteCategory}
+      return (<CategoryCard
+        handleDelete = {this.deleteCategory}
         handleClick = {this.props.handleNav}
+        onSubmit = {this.editCategory}
         categoryName = {category.categoryName}
         categoryId = {category.categoryId}
         key = {category.categoryId}/>);
