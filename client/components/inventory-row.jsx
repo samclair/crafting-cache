@@ -4,9 +4,28 @@ import Button from './button';
 class InventoryRow extends React.Component {
   constructor(props) {
     super(props);
+    this.initialItem = this.props.item;
     this.state = {
-      view: 'info'
+      item: {
+        amount: this.initialItem.amount,
+        amountString: this.initialItem.amountString,
+        id: this.initialItem.id,
+        itemName: this.initialItem.itemName,
+        notes: this.initialItem.notes,
+        unitId: this.initialItem.unitId
+      },
+      view: 'info',
+      name: { input: this.initialItem.itemName, isValid: false, isFocused: false },
+      amount: { input: this.initialItem.amount, isValid: false, isFocused: false },
+      unit: { input: this.initialItem.unitId, isValid: false, isFocused: false },
+      notes: { input: this.initialItem.notes, isValid: false, isFocused: false }
     };
+    this.changeView = this.changeView.bind(this);
+  }
+
+  changeView() {
+    let newState = this.state.view === 'info' ? 'edit' : 'info';
+    this.setState({ view: newState });
   }
 
   formatUnits(unitString) {
@@ -18,14 +37,19 @@ class InventoryRow extends React.Component {
   }
 
   render() {
-    const item = this.props.item;
     return (
-      <tr item={item.id}>
-        <td scope='row'>{item.itemName}</td>
-        <td>{this.formatUnits(item.amountString)}</td>
-        <td>{item.notes}</td>
+      <tr item={this.state.item.id}>
+        <td scope='row'>{this.state.item.itemName}</td>
+        <td>{this.formatUnits(this.state.item.amountString)}</td>
+        <td>{this.state.item.notes}</td>
         <td className="align-middle">
-          <Button color='delete-button mb-auto align-self-left' symbol='fa-times' handleClick={() => this.props.handleDelete(item.id)} text='' />
+          <Button color='delete-button mb-auto align-self-left'
+            symbol='fa-times'
+            handleClick={() => this.props.handleDelete(this.state.item.id)} text='' />
+          <Button
+            color='add-button mb-auto ml-1'
+            symbol='fa-pencil-alt'
+            handleClick={this.changeView} text='' />
         </td>
       </tr>
     );
