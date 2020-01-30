@@ -32,6 +32,23 @@ if ($request['method'] === 'DELETE'){
   send($response);
 }
 
+if ($request['method']=== 'PATCH'){
+  $new_category_name = $request['body']['categoryName'];
+  $category_id = $request['body']['categoryId'];
+  update_category($link, $new_category_name, $category_id);
+  $response['body'] = [
+    'category' => 'updated'
+  ];
+  send($response);
+}
+
+function update_category($link, $category_name, $category_id){
+  $sql = "UPDATE `categories`
+  SET `categoryName` = '$category_name'
+  WHERE `categories`.`categoryId` = '$category_id'";
+  mysqli_query($link, $sql);
+}
+
 function delete_category($link, $category_id){
   $sql = "
   DELETE
