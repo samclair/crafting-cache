@@ -57,7 +57,7 @@ class InventoryList extends React.Component {
           <h2 className='menu-heading'>Inventory List: {this.props.categoryName}</h2>
         </div>
         <div className="d-flex flex-row flex-lg-row flex-column-reverse">
-          <InventoryTable inventory={this.state.inventoryList} handleDelete = {this.deleteItem}/>
+          <InventoryTable inventory={this.state.inventoryList} unitList = {this.state.unitList} handleDelete = {this.deleteItem}/>
           <ItemForm unitList = {this.state.unitList} onSubmit = {this.addItem}/>
         </div>
       </div>);

@@ -15,7 +15,7 @@ function InventoryTable(props) {
       <tbody>
         {
           props.inventory.map(item => {
-            return <InventoryRow handleDelete = {props.handleDelete}key={item.id} item={item}/>;
+            return <InventoryRow unitList = {props.unitList } handleDelete = {props.handleDelete}key={item.id} item={item}/>;
           })
         }
       </tbody>
