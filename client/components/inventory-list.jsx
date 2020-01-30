@@ -11,6 +11,7 @@ class InventoryList extends React.Component {
     };
     this.addItem = this.addItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
+    this.editItem = this.editItem.bind(this);
   }
 
   componentDidMount() {
@@ -50,6 +51,20 @@ class InventoryList extends React.Component {
       .then(data => this.setState({ inventoryList: newInventory }));
   }
 
+  editItem(itemUpdate) {
+    const fetchConfig = {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(itemUpdate)
+    };
+    var oldItemIndex = this.state.inventoryList.findIndex(item => item.id === itemUpdate.id);
+    let newInventoryList = this.state.inventoryList.slice();
+    newInventoryList[oldItemIndex] = itemUpdate;
+    fetch('api/inventory', fetchConfig)
+      .then(() => this.setState({ inventoryList: newInventoryList }))
+      .catch(error => console.error(error.message));
+  }
+
   render() {
     return (
       <div className='container'>
@@ -57,7 +72,11 @@ class InventoryList extends React.Component {
           <h2 className='menu-heading'>Inventory List: {this.props.categoryName}</h2>
         </div>
         <div className="d-flex flex-row flex-lg-row flex-column-reverse">
-          <InventoryTable inventory={this.state.inventoryList} handleDelete = {this.deleteItem}/>
+          <InventoryTable
+            inventory={this.state.inventoryList}
+            unitList = {this.state.unitList}
+            handleEdit = {this.editItem}
+            handleDelete = {this.deleteItem}/>
           <ItemForm unitList = {this.state.unitList} onSubmit = {this.addItem}/>
         </div>
       </div>);
