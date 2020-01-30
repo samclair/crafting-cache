@@ -11,6 +11,7 @@ class InventoryList extends React.Component {
     };
     this.addItem = this.addItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
+    this.editItem = this.editItem.bind(this);
   }
 
   componentDidMount() {
@@ -50,9 +51,18 @@ class InventoryList extends React.Component {
       .then(data => this.setState({ inventoryList: newInventory }));
   }
 
-  editItem(item) {
-    // eslint-disable-next-line no-console
-    console.log(item);
+  editItem(itemUpdate) {
+    const fetchConfig = {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(itemUpdate)
+    };
+    var oldItemIndex = this.state.inventoryList.findIndex(item => item.id === itemUpdate.id);
+    let newInventoryList = this.state.inventoryList.slice();
+    newInventoryList[oldItemIndex] = itemUpdate;
+    fetch('api/inventory', fetchConfig)
+      .then(() => this.setState({ inventoryList: newInventoryList }))
+      .catch(error => console.error(error.message));
   }
 
   render() {
