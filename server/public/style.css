@@ -31,6 +31,10 @@ html{
   user-select: none;
 }
 
+.pointer{
+  cursor: pointer;
+}
+
 .custom-button:active{
   top:2px;
 }
