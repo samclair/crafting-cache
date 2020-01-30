@@ -50,6 +50,11 @@ class InventoryList extends React.Component {
       .then(data => this.setState({ inventoryList: newInventory }));
   }
 
+  editItem(item) {
+    // eslint-disable-next-line no-console
+    console.log(item);
+  }
+
   render() {
     return (
       <div className='container'>
@@ -57,7 +62,11 @@ class InventoryList extends React.Component {
           <h2 className='menu-heading'>Inventory List: {this.props.categoryName}</h2>
         </div>
         <div className="d-flex flex-row flex-lg-row flex-column-reverse">
-          <InventoryTable inventory={this.state.inventoryList} unitList = {this.state.unitList} handleDelete = {this.deleteItem}/>
+          <InventoryTable
+            inventory={this.state.inventoryList}
+            unitList = {this.state.unitList}
+            handleEdit = {this.editItem}
+            handleDelete = {this.deleteItem}/>
           <ItemForm unitList = {this.state.unitList} onSubmit = {this.addItem}/>
         </div>
       </div>);

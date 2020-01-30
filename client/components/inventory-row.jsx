@@ -21,7 +21,37 @@ class InventoryRow extends React.Component {
       unit: { input: this.initialItem.unitId, isValid: false, isFocused: false },
       notes: { input: this.initialItem.notes, isValid: false, isFocused: false }
     };
+    this.textPattern = /^[A-Za-z \d]{3,150}$/;
     this.changeView = this.changeView.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    if (this.state.name.input.match(this.textPattern) &&
+      !isNaN(this.state.amount.input) &&
+      this.state.notes.input.match(this.textPattern)) {
+      this.props.onSubmit({
+        itemName: this.state.name.input,
+        amount: this.state.amount.input,
+        notes: this.state.notes.input,
+        unitId: this.state.unit.input
+      });
+    }
+    this.changeView();
+  }
+
+  handleChange(event) {
+    var input = event.target.value;
+    var isValid = event.target.name === 'amount' ? !isNaN(input) && parseFloat(input) : this.textPattern.test(input);
+    this.setState({ [event.target.name]: { input: input, isValid: isValid, isFocused: true } });
+  }
+
+  handleBlur(event) {
+    let field = event.target.name;
+    this.setState({ [field]: { input: this.state[field].input, isValid: this.state[field].isValid, isFocused: false } });
   }
 
   changeView() {
@@ -58,28 +88,31 @@ class InventoryRow extends React.Component {
     } else if (this.state.view === 'edit') {
       tableData = (
       <>
-        <td scope='row'><FormInput
-          handleChange={this.handleChange}
-          handleBlur={this.handleBlur}
-          fieldName="name"
-          fieldValue={this.state.name}
-        /></td>
-          <td><FormInput
-            handleChange={this.handleChange}
-            handleBlur={this.handleBlur}
-            fieldName="amount"
-            fieldValue={this.state.amount}
-            optionalField={(
-              <select name='unit' type='select' onChange={this.handleChange} >
-                {this.props.unitList.map(unit => <option key={unit.unitId} value={unit.unitId}>{unit.unitName}</option>)}
-              </select>)}
-          /></td>
-          <td><FormInput
-            handleChange={this.handleChange}
-            handleBlur={this.handleBlur}
-            fieldName="notes"
-            fieldValue={this.state.notes}
-          /></td>
+          <td scope='row'><form onSubmit={this.handleSubmit}>
+            <FormInput
+              handleChange={this.handleChange}
+              handleBlur={this.handleBlur}
+              fieldName="name"
+              fieldValue={this.state.name}
+            /></form></td>
+          <td><form onSubmit={this.handleSubmit}>
+            <FormInput
+              handleChange={this.handleChange}
+              handleBlur={this.handleBlur}
+              fieldName="amount"
+              fieldValue={this.state.amount}
+              optionalField={(
+                <select name='unit' type='select' onChange={this.handleChange} value={this.state.unit.input}>
+                  {this.props.unitList.map(unit => <option key={unit.unitId} value={unit.unitId}>{unit.unitName}</option>)}
+                </select>)}
+            /></form></td>
+          <td><form onSubmit={this.handleSubmit}>
+            <FormInput
+              handleChange={this.handleChange}
+              handleBlur={this.handleBlur}
+              fieldName="notes"
+              fieldValue={this.state.notes}
+            /></form></td>
         <td className="align-middle">
           <Button color='delete-button mb-auto align-self-left'
             symbol='fa-times'
@@ -87,7 +120,7 @@ class InventoryRow extends React.Component {
           <Button
             color='add-button mb-auto ml-1'
             symbol='fa-check'
-            handleClick={this.changeView} text='' />
+            handleClick={this.handleSubmit} text='' />
         </td>
         </>
       );
