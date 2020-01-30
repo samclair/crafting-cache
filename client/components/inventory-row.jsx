@@ -22,7 +22,7 @@ class InventoryRow extends React.Component {
     return (
       <tr item={item.id}>
         <td scope='row'>{item.itemName}</td>
-        <td>{this.formatUnits(item.amount)}</td>
+        <td>{this.formatUnits(item.amountString)}</td>
         <td>{item.notes}</td>
         <td className="align-middle">
           <Button color='delete-button mb-auto align-self-left' symbol='fa-times' handleClick={() => this.props.handleDelete(item.id)} text='' />
