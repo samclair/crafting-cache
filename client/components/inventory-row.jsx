@@ -34,6 +34,7 @@ class InventoryRow extends React.Component {
       !isNaN(this.state.amount.input) &&
       this.state.notes.input.match(this.textPattern)) {
       this.props.onSubmit({
+        id: this.state.item.id,
         itemName: this.state.name.input,
         amount: this.state.amount.input,
         notes: this.state.notes.input,
