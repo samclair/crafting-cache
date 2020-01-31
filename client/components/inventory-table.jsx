@@ -15,10 +15,11 @@ function InventoryTable(props) {
       <tbody>
         {
           props.inventory.map(item => {
+            let rowKey = item.id + item.itemName + item.amountString + item.notes;
             return <InventoryRow
               unitList = {props.unitList }
               handleDelete = {props.handleDelete}
-              key={item.id}
+              key={rowKey}
               item={item}
               onSubmit = {props.handleEdit}/>;
           })

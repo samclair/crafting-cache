@@ -59,10 +59,10 @@ class InventoryList extends React.Component {
       body: JSON.stringify(itemUpdate)
     };
     var oldItemIndex = this.state.inventoryList.findIndex(item => item.id === itemUpdate.id);
-    let newInventoryList = this.state.inventoryList.slice();
-    newInventoryList[oldItemIndex] = itemUpdate;
+    let newInventory = this.state.inventoryList.slice();
+    newInventory[oldItemIndex] = itemUpdate;
     fetch('api/inventory', fetchConfig)
-      .then(() => this.setState({ inventoryList: newInventoryList }))
+      .then(() => this.setState({ inventoryList: newInventory }))
       .catch(error => console.error(error.message));
   }
 
