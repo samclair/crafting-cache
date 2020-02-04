@@ -60,9 +60,12 @@ function delete_category($link, $category_id){
 function get_all_categories($link)
 {
   $sql = "
-  SELECT `categoryName`, `categoryId`
-  FROM `categories`
-  WHERE `userId`=1";
+  SELECT `i`.`categoryId`, `c`.`categoryName`, COUNT(*) as `inventoryCount`
+  FROM `inventory` AS `i`
+  INNER JOIN `categories` AS `c`
+  ON `i`.`categoryId` = `c`.`categoryId`
+  WHERE `i`.`userId` = 1
+  GROUP BY `i`.`categoryId`";
   $result = mysqli_query($link, $sql);
   return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
