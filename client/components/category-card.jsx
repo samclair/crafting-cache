@@ -41,7 +41,7 @@ class CategoryCard extends React.Component {
 
   changeView() {
     let newState = this.state.view === 'info' ? 'edit' : 'info';
-    this.setState({ view: newState });
+    this.setState({ view: newState, category: { input: this.state.categoryName } });
   }
 
   render() {
