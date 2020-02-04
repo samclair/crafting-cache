@@ -11,7 +11,7 @@ class CategoryCard extends React.Component {
       category: { input: this.props.categoryName, isValid: true, isFocused: false }
     };
     this.textPattern = /^[A-Za-z \d]{3,64}$/;
-    this.changeState = this.changeState.bind(this);
+    this.changeView = this.changeView.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -39,9 +39,9 @@ class CategoryCard extends React.Component {
     }
   }
 
-  changeState() {
+  changeView() {
     let newState = this.state.view === 'info' ? 'edit' : 'info';
-    this.setState({ view: newState });
+    this.setState({ view: newState, category: { input: this.state.categoryName } });
   }
 
   render() {
@@ -54,7 +54,7 @@ class CategoryCard extends React.Component {
       <Button
         color='add-button mb-auto ml-1'
         symbol='fa-pencil-alt'
-        handleClick={this.changeState} text='' /></>
+        handleClick={this.changeView} text='' /></>
       : <form onSubmit = {this.handleSubmit}>
         <FormInput
           handleChange={this.handleChange}
@@ -65,7 +65,7 @@ class CategoryCard extends React.Component {
         <Button
           color='delete-button mb-auto align-self-left'
           symbol='fa-times'
-          handleClick={this.changeState} text='' />
+          handleClick={this.changeView} text='' />
         <Button
           color='add-button mb-auto ml-1'
           symbol='fa-check'

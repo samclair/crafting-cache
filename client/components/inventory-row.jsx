@@ -57,7 +57,11 @@ class InventoryRow extends React.Component {
 
   changeView() {
     let newState = this.state.view === 'info' ? 'edit' : 'info';
-    this.setState({ view: newState });
+    this.setState({ view: newState,
+      name: { input: this.state.item.itemName },
+      amount: { input: this.state.item.amount },
+      units: { input: this.state.item.unitId },
+      notes: { input: this.state.item.notes } });
   }
 
   formatUnits(unitString) {
@@ -117,7 +121,7 @@ class InventoryRow extends React.Component {
         <td className="align-middle">
           <Button color='delete-button mb-auto align-self-left'
             symbol='fa-times'
-            handleClick={() => this.props.handleDelete(this.state.item.id)} text='' />
+            handleClick={this.changeView} text='' />
           <Button
             color='add-button mb-auto ml-1'
             symbol='fa-check'
