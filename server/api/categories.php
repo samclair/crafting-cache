@@ -57,8 +57,7 @@ function delete_category($link, $category_id){
   mysqli_query($link, $sql);
 }
 
-function get_all_categories($link)
-{
+function get_all_categories($link){
   $sql = "
   SELECT `i`.`categoryId`, `c`.`categoryName`, COUNT(*) as `inventoryCount`
   FROM `inventory` AS `i`
@@ -70,8 +69,7 @@ function get_all_categories($link)
   return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
-function add_category($link, $category)
-{
+function add_category($link, $category){
   $sql = "INSERT INTO `categories` (`categoryId`, `categoryName`, `userId`)
   VALUES (NULL, '$category', '1')";
   mysqli_query($link, $sql);
