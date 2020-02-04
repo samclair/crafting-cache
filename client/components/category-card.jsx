@@ -77,7 +77,7 @@ class CategoryCard extends React.Component {
           <div className="container row d-flex align-items-center">
             {cardHeader}
           </div>
-          <h6 className="card-subtitle mb-2 text-muted">Inventory Count: </h6>
+          <h6 className="card-subtitle mb-2 text-muted">Inventory Count: {this.props.inventoryCount}</h6>
           <a href='#'
             className="card-text pointer"
             onClick={() => this.props.handleClick('inventory', { categoryId: this.props.categoryId, categoryName: this.props.categoryName })}>View Inventory</a>

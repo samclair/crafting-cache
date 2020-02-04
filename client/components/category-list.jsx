@@ -84,6 +84,7 @@ class CategoryList extends React.Component {
         onSubmit = {this.editCategory}
         categoryName = {category.categoryName}
         categoryId = {category.categoryId}
+        inventoryCount = {category.inventoryCount}
         key = {category.categoryId}/>);
     }) : <div>You do not currently have any categories :(</div>;
     return (
