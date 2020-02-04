@@ -5,12 +5,10 @@ $link = get_db_link();
 if (!isset($_SESSION['user_id'])) {
   $user_id = create_user($link);
   $_SESSION['user_id'] = $user_id;
-} else {
-  $user_id = $_SESSION['user_id'];
 }
 
 if ($request['method'] === 'GET') {
-  $response['body'] = get_all_categories($link, $user_id);
+  $response['body'] = get_all_categories($link, $_SESSION['user_id']);
   send($response);
 }
 
@@ -19,7 +17,7 @@ if ($request['method'] === 'POST') {
   if (!isset($category)) {
     throw new ApiError("Missing category name", 400);
   }
-  $new_category_id  = add_category($link, $category, $user_id);
+  $new_category_id  = add_category($link, $category, $_SESSION['user_id']);
   $response['body'] = [
     'categoryName' => $category,
     'categoryId' => $new_category_id
@@ -66,19 +64,19 @@ function delete_category($link, $category_id){
 
 function get_all_categories($link, $user_id){
   $sql = "
-  SELECT `i`.`categoryId`, `c`.`categoryName`, COUNT(*) as `inventoryCount`
-  FROM `inventory` AS `i`
-  INNER JOIN `categories` AS `c`
+  SELECT `c`.`categoryName`, `c`.`categoryId`, COUNT(`itemName`) as inventoryCount
+  FROM `categories` AS `c`
+  LEFT JOIN `inventory` AS `i`
   ON `i`.`categoryId` = `c`.`categoryId`
-  WHERE `i`.`userId` = $user_id
-  GROUP BY `i`.`categoryId`";
+  WHERE `c`.`userId` = $user_id
+  GROUP BY `c`.`categoryId`";
   $result = mysqli_query($link, $sql);
   return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
 function add_category($link, $category, $user_id){
   $sql = "INSERT INTO `categories` (`categoryId`, `categoryName`, `userId`)
-  VALUES (NULL, '$category', $user_id)";
+  VALUES (NULL, '$category', '$user_id')";
   mysqli_query($link, $sql);
   return mysqli_insert_id($link);
 }
