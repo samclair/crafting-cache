@@ -27,7 +27,7 @@ CREATE TABLE `categories` (
   `categoryName` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   `userId` smallint(6) NOT NULL,
   PRIMARY KEY (`categoryId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,6 +36,7 @@ CREATE TABLE `categories` (
 
 LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
+INSERT INTO `categories` VALUES (32,'Fabricsss',1),(36,'Paint',1),(37,'Buttons',1),(38,'Fabric',3);
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -48,12 +49,14 @@ DROP TABLE IF EXISTS `inventory`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `inventory` (
   `itemId` int(11) NOT NULL AUTO_INCREMENT,
+  `itemName` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `amount` smallint(3) unsigned NOT NULL,
   `userId` tinyint(4) NOT NULL,
   `unitId` tinyint(4) NOT NULL,
   `categoryId` tinyint(4) NOT NULL,
   `notes` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`itemId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,6 +65,7 @@ CREATE TABLE `inventory` (
 
 LOCK TABLES `inventory` WRITE;
 /*!40000 ALTER TABLE `inventory` DISABLE KEYS */;
+INSERT INTO `inventory` VALUES (33,'Red Rayon',65,1,3,32,'For new smock'),(34,'Heart Print Basdfasdfroadcloth',34444,1,3,32,'Use for new quilt'),(35,'White Muslin',45,1,3,32,'For mockups'),(36,'Red Fabric Paint',3,1,2,36,'extra puffy'),(37,'blue acrylic',2,1,7,36,'sky colored');
 /*!40000 ALTER TABLE `inventory` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -74,9 +78,9 @@ DROP TABLE IF EXISTS `units`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `units` (
   `unitId` tinyint(4) unsigned NOT NULL AUTO_INCREMENT,
-  `unitName` int(11) unsigned NOT NULL,
+  `unitName` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`unitId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -85,6 +89,7 @@ CREATE TABLE `units` (
 
 LOCK TABLES `units` WRITE;
 /*!40000 ALTER TABLE `units` DISABLE KEYS */;
+INSERT INTO `units` VALUES (1,'pound'),(2,'ounce'),(3,'yard'),(4,'feet'),(5,'inch'),(6,'piece'),(7,'unit');
 /*!40000 ALTER TABLE `units` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -99,7 +104,7 @@ CREATE TABLE `users` (
   `userId` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`userId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -108,6 +113,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'2020-01-22 20:24:59'),(2,'2020-02-04 19:02:27'),(3,'2020-02-04 19:11:18'),(4,'2020-02-04 19:52:59'),(5,'2020-02-04 19:53:17');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -120,4 +126,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-01-16 13:24:39
+-- Dump completed on 2020-02-07 15:10:45
