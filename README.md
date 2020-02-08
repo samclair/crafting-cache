@@ -12,7 +12,7 @@ A full stack JavaScript CMS for managing your personal crafting inventory
 
 ## Live Demo
 
-Coming Soon!
+Try the application live at <https://craftingcache.samcnagle.com>
 
 ## Features
 
@@ -26,7 +26,7 @@ Coming Soon!
 
 ## Preview
 
-Coming Soon!
+![SGT React](images/craftingcache.gif)
 
 ## Development
 
