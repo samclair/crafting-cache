@@ -46,3 +46,7 @@ html{
 .delete-button{
   background-color: red;
 }
+
+.table_row_buttons{
+  margin-left: 0;
+}

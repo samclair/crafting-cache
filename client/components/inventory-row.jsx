@@ -81,13 +81,15 @@ class InventoryRow extends React.Component {
         <td>{this.formatUnits(this.state.item.amountString)}</td>
         <td>{this.state.item.notes}</td>
         <td className="align-middle">
-          <Button color='delete-button mb-auto align-self-left'
-            symbol='fa-times'
-            handleClick={() => this.props.handleDelete(this.state.item.id)} text='' />
-          <Button
-            color='add-button mb-auto ml-1'
-            symbol='fa-pencil-alt'
-            handleClick={this.changeView} text='' />
+          <div className="table-row-buttons">
+            <Button color='delete-button mb-auto align-self-left'
+              symbol='fa-times'
+              handleClick={() => this.props.handleDelete(this.state.item.id)} text='' />
+            <Button
+              color='add-button mb-auto ml-1'
+              symbol='fa-pencil-alt'
+              handleClick={this.changeView} text='' />
+          </div>
         </td>
         </>);
     } else if (this.state.view === 'edit') {
@@ -119,13 +121,15 @@ class InventoryRow extends React.Component {
               fieldValue={this.state.notes}
             /></form></td>
         <td className="align-middle">
-          <Button color='delete-button mb-auto align-self-left'
-            symbol='fa-times'
-            handleClick={this.changeView} text='' />
-          <Button
-            color='add-button mb-auto ml-1'
-            symbol='fa-check'
-            handleClick={this.handleSubmit} text='' />
+          <div className="table-row-buttons">
+            <Button color='delete-button mb-auto align-self-left'
+              symbol='fa-times'
+              handleClick={this.changeView} text='' />
+            <Button
+              color='add-button mb-auto ml-1'
+              symbol='fa-check'
+              handleClick={this.handleSubmit} text='' />
+          </div>
         </td>
         </>
       );
