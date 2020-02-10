@@ -46,9 +46,8 @@ class CategoryList extends React.Component {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ categoryId: categoryId })
     };
-    var newCategories = this.state.categoryList.filter(category => category.categoryId !== categoryId);
     fetch('api/categories', fetchConfig)
-      .then(() => this.setState({ categoryList: newCategories }))
+      .then(() => this.getCategories())
       .catch(error => console.error(error.message));
   }
 
@@ -62,7 +61,7 @@ class CategoryList extends React.Component {
     let newCategories = this.state.categoryList.slice();
     newCategories[oldCategoryIndex] = categoryUpdate;
     fetch('api/categories', fetchConfig)
-      .then(() => this.setState({ categoryList: newCategories }))
+      .then(() => this.getCategories())
       .catch(error => console.error(error.message));
   }
 

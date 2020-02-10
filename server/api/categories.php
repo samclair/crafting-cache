@@ -17,11 +17,8 @@ if ($request['method'] === 'POST') {
   if (!isset($category)) {
     throw new ApiError("Missing category name", 400);
   }
-  $new_category_id  = add_category($link, $category, $_SESSION['user_id']);
-  $response['body'] = [
-    'categoryName' => $category,
-    'categoryId' => $new_category_id
-  ];
+  $new_category  = add_category($link, $category, $_SESSION['user_id']);
+  $response['body'] = $new_category;
   send($response);
 }
 
@@ -78,7 +75,20 @@ function add_category($link, $category, $user_id){
   $sql = "INSERT INTO `categories` (`categoryId`, `categoryName`, `userId`)
   VALUES (NULL, '$category', '$user_id')";
   mysqli_query($link, $sql);
-  return mysqli_insert_id($link);
+  $new_category_id = mysqli_insert_id($link);
+  return get_inventory_info($link, $new_category_id);
+}
+
+function get_inventory_info($link, $category_id){
+  $sql ="
+  SELECT `c`.`categoryName`, `c`.`categoryId`, COUNT(`itemName`) as inventoryCount
+  FROM `categories` AS `c`
+  LEFT JOIN `inventory` AS `i`
+  ON `i`.`categoryId` = `c`.`categoryId`
+  WHERE `c`.`categoryId` = $category_id
+  GROUP BY `c`.`categoryId`";
+  $result = mysqli_query($link, $sql);
+  return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
 function create_user($link){
