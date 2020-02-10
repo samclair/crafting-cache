@@ -1,4 +1,4 @@
-# student-grade-table
+# crafting-cache
 
 A full stack JavaScript CMS for managing your personal crafting inventory
 
@@ -26,7 +26,7 @@ Try the application live at <https://craftingcache.samcnagle.com>
 
 ## Preview
 
-![SGT React](images/craftingcache.gif)
+![Crafting Cache](images/craftingcache.gif)
 
 ## Development
 
