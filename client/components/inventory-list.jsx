@@ -1,6 +1,7 @@
 import React from 'react';
 import InventoryTable from './inventory-table';
 import ItemForm from './item-form';
+import Button from './button';
 
 class InventoryList extends React.Component {
   constructor(props) {
@@ -67,6 +68,13 @@ class InventoryList extends React.Component {
       <div className='container'>
         <div className="row my-3">
           <h2 className='menu-heading'>Inventory List: {this.props.categoryName}</h2>
+        </div>
+        <div className="row mb-3">
+          <Button
+            text= " Return to categories"
+            handleClick = {() => this.props.handleNav('categories')}
+            symbol = "fa-arrow-left"
+            color = "add-button"/>
         </div>
         <div className="d-flex flex-row flex-lg-row flex-column-reverse">
           <InventoryTable
