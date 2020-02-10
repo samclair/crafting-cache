@@ -7,15 +7,16 @@ function FormInput(props) {
     </div>
   </div>) : null;
   let optionalField = props.optionalField ? props.optionalField : null;
+  let optionalClass = props.optionalClass ? props.optionalClass : null;
   return (
-    <div className="input-group mb-2">
+    <div className={optionalClass + ' input-group mb-2'}>
       {formIcon}
       <input
         onChange={props.handleChange}
         onBlur = {props.handleBlur}
         value={props.fieldValue.input}
         name={props.fieldName}
-        className={'form-control ' + (props.fieldValue.isFocused ? (props.fieldValue.isValid ? 'is-valid' : 'is-invalid') : '')}
+        className={' form-control ' + (props.fieldValue.isFocused ? (props.fieldValue.isValid ? 'is-valid form-adjust' : 'is-invalid form-adjust') : '')}
         type="text"
         placeholder={props.fieldName[0].toUpperCase() + props.fieldName.slice(1)} />
       {optionalField}

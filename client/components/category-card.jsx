@@ -61,6 +61,7 @@ class CategoryCard extends React.Component {
           handleBlur={this.handleBlur}
           fieldName="category"
           fieldValue={this.state.category}
+          optionalClass = "category-card-input"
         />
         <Button
           color='delete-button mb-auto align-self-left'

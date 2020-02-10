@@ -50,3 +50,14 @@ html{
 .table_row_buttons{
   margin-left: 0;
 }
+
+.form-adjust{
+  padding-right: .75rem !important;
+  background-image: none !important;
+}
+
+.category-card-input{
+  display: inline-flex;
+  width: 70% !important;
+  padding-right: 3%
+}
