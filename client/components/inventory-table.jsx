@@ -2,7 +2,16 @@ import React from 'react';
 import InventoryRow from './inventory-row';
 
 function InventoryTable(props) {
-  return (
+  let tableData = props.inventory.length ? props.inventory.map(item => {
+    let rowKey = item.id + item.itemName + item.amountString + item.notes;
+    return <InventoryRow
+      unitList={props.unitList}
+      handleDelete={props.handleDelete}
+      key={rowKey}
+      item={item}
+      onSubmit={props.handleEdit} />;
+  }) : <td colSpan='4' style={{ textAlign: 'center' }}>You do not currently have any items in this category :(</td>;
+  return (<>
     <table className="mx-lg-4 table table-striped table-header col-sm-11 col-lg-7 table-bordered">
       <thead>
         <tr>
@@ -13,19 +22,10 @@ function InventoryTable(props) {
         </tr>
       </thead>
       <tbody>
-        {
-          props.inventory.map(item => {
-            let rowKey = item.id + item.itemName + item.amountString + item.notes;
-            return <InventoryRow
-              unitList = {props.unitList }
-              handleDelete = {props.handleDelete}
-              key={rowKey}
-              item={item}
-              onSubmit = {props.handleEdit}/>;
-          })
-        }
+        {tableData}
       </tbody>
     </table>
+    </>
   );
 }
 

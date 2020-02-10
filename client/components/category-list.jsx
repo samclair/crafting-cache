@@ -90,7 +90,7 @@ class CategoryList extends React.Component {
       <div className='container'>
         <div className="row my-3">
           <h2 className='menu-heading'>Category List</h2>
-          <div className='offset-8'>
+          <div className='offset-7 offset-sm-8'>
             {formButton}
           </div>
         </div>
