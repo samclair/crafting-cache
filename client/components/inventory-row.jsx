@@ -81,7 +81,7 @@ class InventoryRow extends React.Component {
         <td>{this.formatUnits(this.state.item.amountString)}</td>
         <td>{this.state.item.notes}</td>
         <td className="align-middle">
-          <div className="table-row-buttons">
+          <div className="table-row-buttons d-flex">
             <Button color='delete-button mb-auto align-self-left'
               symbol='fa-times'
               handleClick={() => this.props.handleDelete(this.state.item.id)} text='' />
@@ -121,7 +121,7 @@ class InventoryRow extends React.Component {
               fieldValue={this.state.notes}
             /></form></td>
         <td className="align-middle">
-          <div className="table-row-buttons">
+          <div className="table-row-buttons d-flex">
             <Button color='delete-button mb-auto align-self-left'
               symbol='fa-times'
               handleClick={this.changeView} text='' />

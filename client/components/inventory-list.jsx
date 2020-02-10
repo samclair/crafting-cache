@@ -45,10 +45,9 @@ class InventoryList extends React.Component {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ itemId: id })
     };
-    let newInventory = this.state.inventoryList.filter(item => item.id !== id);
     fetch('api/inventory', fetchConfig)
       .then(res => res.json())
-      .then(data => this.setState({ inventoryList: newInventory }));
+      .then(data => this.getTableData(this.props.categoryId));
   }
 
   editItem(itemUpdate) {
@@ -58,11 +57,8 @@ class InventoryList extends React.Component {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(itemUpdate)
     };
-    var oldItemIndex = this.state.inventoryList.findIndex(item => item.id === itemUpdate.id);
-    let newInventory = this.state.inventoryList.slice();
-    newInventory[oldItemIndex] = itemUpdate;
     fetch('api/inventory', fetchConfig)
-      .then(() => this.setState({ inventoryList: newInventory }))
+      .then(() => this.getTableData(this.props.categoryId))
       .catch(error => console.error(error.message));
   }
 
