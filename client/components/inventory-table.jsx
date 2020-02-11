@@ -10,7 +10,7 @@ function InventoryTable(props) {
       key={rowKey}
       item={item}
       onSubmit={props.handleEdit} />;
-  }) : <td colSpan='4' style={{ textAlign: 'center' }}>You do not currently have any items in this category :(</td>;
+  }) : <tr><td colSpan='4' style={{ textAlign: 'center' }}>You do not currently have any items in this category :(</td></tr>;
   return (<>
     <table className="mx-lg-4 table table-striped table-header col-sm-11 col-lg-7 table-bordered">
       <thead>

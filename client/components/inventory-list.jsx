@@ -2,13 +2,15 @@ import React from 'react';
 import InventoryTable from './inventory-table';
 import ItemForm from './item-form';
 import Button from './button';
+import LoadingSpinner from './loading-spinner';
 
 class InventoryList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       inventoryList: [],
-      unitList: []
+      unitList: [],
+      showSpinner: true
     };
     this.addItem = this.addItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
@@ -22,7 +24,7 @@ class InventoryList extends React.Component {
   getTableData(categoryId) {
     fetch(`api/inventory?categoryId=${categoryId}`)
       .then(res => res.json())
-      .then(data => this.setState({ inventoryList: data.inventory, unitList: data.units }));
+      .then(data => this.setState({ inventoryList: data.inventory, unitList: data.units, showSpinner: false }));
   }
 
   addItem(item) {
@@ -64,6 +66,15 @@ class InventoryList extends React.Component {
   }
 
   render() {
+    let pageContent = this.state.showSpinner ? <LoadingSpinner /> : (
+      <div className="d-flex flex-row flex-lg-row flex-column-reverse">
+        <InventoryTable
+          inventory={this.state.inventoryList}
+          unitList={this.state.unitList}
+          handleEdit={this.editItem}
+          handleDelete={this.deleteItem} />
+        <ItemForm unitList={this.state.unitList} onSubmit={this.addItem} />
+      </div>);
     return (
       <div className='container'>
         <div className="row my-3">
@@ -76,14 +87,7 @@ class InventoryList extends React.Component {
             symbol = "fa-arrow-left"
             color = "add-button"/>
         </div>
-        <div className="d-flex flex-row flex-lg-row flex-column-reverse">
-          <InventoryTable
-            inventory={this.state.inventoryList}
-            unitList = {this.state.unitList}
-            handleEdit = {this.editItem}
-            handleDelete = {this.deleteItem}/>
-          <ItemForm unitList = {this.state.unitList} onSubmit = {this.addItem}/>
-        </div>
+        {pageContent}
       </div>);
   }
 }
