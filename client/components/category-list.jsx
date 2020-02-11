@@ -2,13 +2,15 @@ import React from 'react';
 import CategoryCard from './category-card';
 import CategoryForm from './category-form';
 import Button from './button';
+import LoadingSpinner from './loading-spinner';
 
 class CategoryList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       view: { showForm: false, showButton: true },
-      categoryList: []
+      categoryList: [],
+      showSpinner: true
     };
     this.addCategory = this.addCategory.bind(this);
     this.deleteCategory = this.deleteCategory.bind(this);
@@ -37,7 +39,7 @@ class CategoryList extends React.Component {
   getCategories() {
     fetch('api/categories')
       .then(res => res.json())
-      .then(categories => this.setState({ categoryList: categories }));
+      .then(categories => this.setState({ categoryList: categories, showSpinner: false }));
   }
 
   deleteCategory(categoryId) {
@@ -86,6 +88,7 @@ class CategoryList extends React.Component {
         inventoryCount = {category.inventoryCount}
         key = {category.categoryId}/>);
     }) : <div>You do not currently have any categories :(</div>;
+    let pageContent = this.state.showSpinner ? <LoadingSpinner/> : categoryCards;
     return (
       <div className='container'>
         <div className="row my-3">
@@ -95,7 +98,7 @@ class CategoryList extends React.Component {
           </div>
         </div>
         {categoryForm}
-        <div className="row d-flex justify-content-center">{categoryCards}</div>
+        <div className="row d-flex justify-content-center">{pageContent}</div>
       </div>);
   }
 }
