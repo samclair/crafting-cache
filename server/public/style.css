@@ -44,7 +44,16 @@ html{
 }
 
 .delete-button{
-  background-color: red;
+  background-color: #D60000;
+}
+
+.deleted-item{
+  text-align: center;
+  background-color: #FFDEDE;
+  color: #D60000;
+  border-color: #D60000;
+  transition: opacity 1s ease 2s;
+  opacity: 0;
 }
 
 .table_row_buttons{
