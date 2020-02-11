@@ -18,6 +18,7 @@ class CategoryCard extends React.Component {
     this.handleBlur = this.handleBlur.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.componentIsDeleted = this.componentIsDeleted.bind(this);
+    this.cancelDelete = this.cancelDelete.bind(this);
   }
 
   handleChange(event) {
@@ -45,6 +46,14 @@ class CategoryCard extends React.Component {
   componentIsDeleted() {
     this.setState({ view: 'deleted',
       displayTimeout: setTimeout(() => { this.props.handleDelete(this.props.categoryId); this.setState({ isDeleted: true }); }, 2700) });
+  }
+
+  cancelDelete() {
+    clearTimeout(this.state.displayTimeout);
+    this.setState({
+      view: 'info',
+      displayTimeout: null
+    });
   }
 
   changeView() {
@@ -102,7 +111,10 @@ class CategoryCard extends React.Component {
           style={{ width: '18rem', 'userSelect': 'none' }}>
           <div className="card-body">
             <div className="container row d-flex align-items-center">
-              <p>{`${this.props.categoryName} category and its ${this.props.inventoryCount} items have been deleted`}</p>
+              <p>{`${this.props.categoryName} category and its ${this.props.inventoryCount} items have been deleted`}
+                <br/><a className='pointer' onClick={this.cancelDelete}><u>Undo</u></a>
+              </p>
+
             </div>
           </div>
         </div>);
