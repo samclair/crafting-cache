@@ -8,13 +8,16 @@ class CategoryCard extends React.Component {
     this.state = {
       categoryName: this.props.categoryName,
       view: 'info',
-      category: { input: this.props.categoryName, isValid: true, isFocused: false }
+      category: { input: this.props.categoryName, isValid: true, isFocused: false },
+      isDeleted: false,
+      displayTimeout: null
     };
     this.textPattern = /^[A-Za-z \d]{3,64}$/;
     this.changeView = this.changeView.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.componentIsDeleted = this.componentIsDeleted.bind(this);
   }
 
   handleChange(event) {
@@ -39,6 +42,11 @@ class CategoryCard extends React.Component {
     }
   }
 
+  componentIsDeleted() {
+    this.setState({ view: 'deleted',
+      displayTimeout: setTimeout(() => { this.props.handleDelete(this.props.categoryId); this.setState({ isDeleted: true }); }, 2700) });
+  }
+
   changeView() {
     let newState = this.state.view === 'info' ? 'edit' : 'info';
     this.setState({ view: newState, category: { input: this.state.categoryName } });
@@ -50,7 +58,7 @@ class CategoryCard extends React.Component {
       <Button
         color='delete-button mb-auto align-self-left'
         symbol='fa-times'
-        handleClick={() => (this.props.handleDelete(this.props.categoryId))} text='' />
+        handleClick={this.componentIsDeleted } text='' />
       <Button
         color='add-button mb-auto ml-1'
         symbol='fa-pencil-alt'
@@ -71,19 +79,35 @@ class CategoryCard extends React.Component {
           color='add-button mb-auto ml-1'
           symbol='fa-check'
           handleClick={this.handleSubmit} text='' /></form>;
-    return (
-      <div className="card mx-3 my-3"
-        style={{ width: '18rem', 'userSelect': 'none' }}>
-        <div className="card-body">
-          <div className="container row d-flex align-items-center">
-            {cardHeader}
+    let card;
+    if (this.state.isDeleted) {
+      card = <div className='d-none'></div>;
+    } else if (this.state.view === 'info' || this.state.view === 'edit') {
+      card = (
+        <div className="card mx-3 my-3"
+          style={{ width: '18rem', 'userSelect': 'none' }}>
+          <div className="card-body">
+            <div className="container row d-flex align-items-center">
+              {cardHeader}
+            </div>
+            <h6 className="card-subtitle mb-2 text-muted">Inventory Count: {this.props.inventoryCount}</h6>
+            <a href='#'
+              className="card-text pointer"
+              onClick={() => this.props.handleClick('inventory', { categoryId: this.props.categoryId, categoryName: this.props.categoryName })}>View Inventory</a>
           </div>
-          <h6 className="card-subtitle mb-2 text-muted">Inventory Count: {this.props.inventoryCount}</h6>
-          <a href='#'
-            className="card-text pointer"
-            onClick={() => this.props.handleClick('inventory', { categoryId: this.props.categoryId, categoryName: this.props.categoryName })}>View Inventory</a>
-        </div>
-      </div>);
+        </div>);
+    } else if (this.state.view === 'deleted') {
+      card = (
+        <div className="card mx-3 my-3 deleted-item"
+          style={{ width: '18rem', 'userSelect': 'none' }}>
+          <div className="card-body">
+            <div className="container row d-flex align-items-center">
+              <p>{`${this.props.categoryName} category and its ${this.props.inventoryCount} items have been deleted`}</p>
+            </div>
+          </div>
+        </div>);
+    }
+    return card;
   }
 }
 

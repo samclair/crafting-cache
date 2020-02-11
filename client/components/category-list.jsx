@@ -91,7 +91,7 @@ class CategoryList extends React.Component {
     let pageContent = this.state.showSpinner ? <LoadingSpinner/> : categoryCards;
     return (
       <div className='container'>
-        <div className="row my-3">
+        <div className="row my-3 ml-3">
           <h2 className='menu-heading'>Category List</h2>
           <div className='offset-7 offset-sm-8'>
             {formButton}

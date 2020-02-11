@@ -77,10 +77,10 @@ class InventoryList extends React.Component {
       </div>);
     return (
       <div className='container'>
-        <div className="row my-3">
+        <div className="row my-3 ml-3">
           <h2 className='menu-heading'>Inventory List: {this.props.categoryName}</h2>
         </div>
-        <div className="row mb-3">
+        <div className="row mb-3 ml-3">
           <Button
             text= " Return to categories"
             handleClick = {() => this.props.handleNav('categories')}
