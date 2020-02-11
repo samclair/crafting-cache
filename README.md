@@ -26,7 +26,7 @@ Try the application live at <https://craftingcache.samcnagle.com>
 
 ## Preview
 
-![Crafting Cache](images/craftingcache.gif)
+![Crafting Cache](server/public/images/craftingcache.gif)
 
 ## Development
 
