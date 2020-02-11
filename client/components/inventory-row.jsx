@@ -19,13 +19,16 @@ class InventoryRow extends React.Component {
       name: { input: this.initialItem.itemName, isValid: false, isFocused: false },
       amount: { input: this.initialItem.amount, isValid: false, isFocused: false },
       unit: { input: this.initialItem.unitId, isValid: false, isFocused: false },
-      notes: { input: this.initialItem.notes, isValid: false, isFocused: false }
+      notes: { input: this.initialItem.notes, isValid: false, isFocused: false },
+      isDeleted: false,
+      displayTimeout: null
     };
     this.textPattern = /^[A-Za-z \d]{3,150}$/;
     this.changeView = this.changeView.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.componentIsDeleted = this.componentIsDeleted.bind(this);
   }
 
   handleSubmit(event) {
@@ -72,29 +75,38 @@ class InventoryRow extends React.Component {
     return unitComponents.join(' ');
   }
 
+  componentIsDeleted() {
+    this.setState({
+      view: 'deleted',
+      displayTimeout: setTimeout(() => { this.props.handleDelete(this.state.item.id); this.setState({ isDeleted: true }); }, 2700)
+    });
+  }
+
   render() {
-    let tableData = null;
-    if (this.state.view === 'info') {
-      tableData =
-      (<>
-      <td scope='row'>{this.state.item.itemName}</td>
+    let tableRow = null;
+    if (this.state.isDeleted) {
+      tableRow = null;
+    } else if (this.state.view === 'info') {
+      tableRow =
+      (<tr item={this.state.item.id}>
+        <td scope='row'>{this.state.item.itemName}</td>
         <td>{this.formatUnits(this.state.item.amountString)}</td>
         <td>{this.state.item.notes}</td>
         <td className="align-middle">
           <div className="table-row-buttons d-flex">
             <Button color='delete-button mb-auto align-self-left'
               symbol='fa-times'
-              handleClick={() => this.props.handleDelete(this.state.item.id)} text='' />
+              handleClick={this.componentIsDeleted} text='' />
             <Button
               color='add-button mb-auto ml-1'
               symbol='fa-pencil-alt'
               handleClick={this.changeView} text='' />
           </div>
         </td>
-        </>);
+      </tr>);
     } else if (this.state.view === 'edit') {
-      tableData = (
-      <>
+      tableRow = (
+        <tr item={this.state.item.id}>
           <td scope='row'><form onSubmit={this.handleSubmit}>
             <FormInput
               handleChange={this.handleChange}
@@ -120,25 +132,23 @@ class InventoryRow extends React.Component {
               fieldName="notes"
               fieldValue={this.state.notes}
             /></form></td>
-        <td className="align-middle">
-          <div className="table-row-buttons d-flex">
-            <Button color='delete-button mb-auto align-self-left'
-              symbol='fa-times'
-              handleClick={this.changeView} text='' />
-            <Button
-              color='add-button mb-auto ml-1'
-              symbol='fa-check'
-              handleClick={this.handleSubmit} text='' />
-          </div>
-        </td>
-        </>
+          <td className="align-middle">
+            <div className="table-row-buttons d-flex">
+              <Button color='delete-button mb-auto align-self-left'
+                symbol='fa-times'
+                handleClick={this.changeView} text='' />
+              <Button
+                color='add-button mb-auto ml-1'
+                symbol='fa-check'
+                handleClick={this.handleSubmit} text='' />
+            </div>
+          </td>
+        </tr>
       );
+    } else if (this.state.view === 'deleted') {
+      tableRow = <tr><td colSpan='4' className = 'deleted-item'>{`${this.state.item.itemName} has been deleted`}</td></tr>;
     }
-    return (
-      <tr item={this.state.item.id}>
-        {tableData}
-      </tr>
-    );
+    return tableRow;
   }
 }
 
