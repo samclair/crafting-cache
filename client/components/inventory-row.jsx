@@ -29,6 +29,7 @@ class InventoryRow extends React.Component {
     this.handleBlur = this.handleBlur.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.componentIsDeleted = this.componentIsDeleted.bind(this);
+    this.cancelDelete = this.cancelDelete.bind(this);
   }
 
   handleSubmit(event) {
@@ -79,6 +80,14 @@ class InventoryRow extends React.Component {
     this.setState({
       view: 'deleted',
       displayTimeout: setTimeout(() => { this.props.handleDelete(this.state.item.id); this.setState({ isDeleted: true }); }, 2700)
+    });
+  }
+
+  cancelDelete() {
+    clearTimeout(this.state.displayTimeout);
+    this.setState({
+      view: 'info',
+      displayTimeout: null
     });
   }
 
@@ -146,7 +155,11 @@ class InventoryRow extends React.Component {
         </tr>
       );
     } else if (this.state.view === 'deleted') {
-      tableRow = <tr><td colSpan='4' className = 'deleted-item'>{`${this.state.item.itemName} has been deleted`}</td></tr>;
+      tableRow = (<tr>
+        <td colSpan='4' className = 'deleted-item'>{`${this.state.item.itemName} has been deleted`}
+          <br/><a className='pointer' onClick={this.cancelDelete}><u>Undo</u></a>
+        </td>
+      </tr>);
     }
     return tableRow;
   }
