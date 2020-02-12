@@ -109,17 +109,18 @@ class InventoryRow extends React.Component {
       tableRow =
       (<tr item={this.state.item.id}>
         <td scope='row'>{this.state.item.itemName}</td>
-        <td><div className= 'd-flex justify-content-top justify-content-md-center'>
-          <div className = 'd-inline-flex flex-column mr-2'><Button
-            color='change-count'
-            symbol = 'fa-caret-up'
-            handleClick={() => (this.changeQuantity('up'))}
-          />
-          <Button
-            color='change-count'
-            symbol='fa-caret-down'
-            handleClick={() => (this.changeQuantity('down'))}
-          /></div>
+        <td><div className= 'd-flex'>
+          <div className = 'd-inline-flex flex-column mr-2'>
+            <Button
+              color='change-count'
+              symbol = 'fa-caret-up'
+              handleClick={() => (this.changeQuantity('up'))}
+            />
+            <Button
+              color='change-count'
+              symbol='fa-caret-down'
+              handleClick={() => (this.changeQuantity('down'))}
+            /></div>
           <span>{this.formatUnits(this.state.item.amountString)}</span>
         </div>
         </td>
@@ -147,16 +148,39 @@ class InventoryRow extends React.Component {
               fieldValue={this.state.name}
             /></form></td>
           <td><form onSubmit={this.handleSubmit}>
-            <FormInput
-              handleChange={this.handleChange}
-              handleBlur={this.handleBlur}
-              fieldName="amount"
-              fieldValue={this.state.amount}
-              optionalField={(
-                <select name='unit' type='select' onChange={this.handleChange} value={this.state.unit.input}>
-                  {this.props.unitList.map(unit => <option key={unit.unitId} value={unit.unitId}>{unit.unitName}</option>)}
-                </select>)}
-            /></form></td>
+            <div className="d-flex">
+              <div className='d-inline-flex flex-column mr-2'>
+                <Button
+                  color='change-count'
+                  symbol='fa-caret-up'
+                  handleClick={() => (this.setState({ amount:
+                { input: this.state.amount.input + 1,
+                  isValid: false,
+                  isFocused: false
+                } }))}
+                />
+                <Button
+                  color='change-count'
+                  symbol='fa-caret-down'
+                  handleClick={() => (this.setState({ amount:
+                { input: this.state.amount.input - 1,
+                  isValid: false,
+                  isFocused: false
+                } }))}
+                /></div>
+              <FormInput
+                handleChange={this.handleChange}
+                handleBlur={this.handleBlur}
+                fieldName="amount"
+                fieldValue={this.state.amount}
+                optionalField={(
+                  <select name='unit' type='select' onChange={this.handleChange} value={this.state.unit.input}>
+                    {this.props.unitList.map(unit => <option key={unit.unitId} value={unit.unitId}>{unit.unitName}</option>)}
+                  </select>)}
+              />
+            </div>
+          </form>
+          </td>
           <td><form onSubmit={this.handleSubmit}>
             <FormInput
               handleChange={this.handleChange}
