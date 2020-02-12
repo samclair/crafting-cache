@@ -56,6 +56,15 @@ html{
   opacity: 0;
 }
 
+.error-message{
+  text-align: center;
+  background-color: #FFDEDE;
+  color: #D60000;
+  border-style: solid;
+  border-radius: .3em;
+  border-color: #D60000;
+}
+
 .table_row_buttons{
   margin-left: 0;
 }
