@@ -70,3 +70,13 @@ html{
   width: 70% !important;
   padding-right: 3%
 }
+
+.change-count{
+  height: 1.5rem;
+  background-color: gray;
+  padding: 0 .5rem !important;
+}
+
+table{
+  margin: auto;
+}

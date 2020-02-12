@@ -33,7 +33,7 @@ class InventoryRow extends React.Component {
   }
 
   handleSubmit(event) {
-    event.preventDefault();
+    if (event)event.preventDefault();
     if (this.state.name.input.match(this.textPattern) &&
       !isNaN(this.state.amount.input) &&
       this.state.notes.input.match(this.textPattern)) {
@@ -45,7 +45,7 @@ class InventoryRow extends React.Component {
         unitId: this.state.unit.input
       });
     }
-    this.changeView();
+    this.changeView('info');
   }
 
   handleChange(event) {
@@ -59,8 +59,8 @@ class InventoryRow extends React.Component {
     this.setState({ [field]: { input: this.state[field].input, isValid: this.state[field].isValid, isFocused: false } });
   }
 
-  changeView() {
-    let newState = this.state.view === 'info' ? 'edit' : 'info';
+  changeView(stateStr) {
+    let newState = stateStr;
     this.setState({ view: newState,
       name: { input: this.state.item.itemName },
       amount: { input: this.state.item.amount },
@@ -91,6 +91,16 @@ class InventoryRow extends React.Component {
     });
   }
 
+  changeQuantity(adjustment) {
+    const newVal = adjustment === 'up' ? this.state.amount.input + 1 : this.state.amount.input - 1;
+    this.setState({ amount:
+      { input: newVal,
+        isValid: false,
+        isFocused: false
+      }
+    }, this.handleSubmit);
+  }
+
   render() {
     let tableRow = null;
     if (this.state.isDeleted) {
@@ -99,7 +109,21 @@ class InventoryRow extends React.Component {
       tableRow =
       (<tr item={this.state.item.id}>
         <td scope='row'>{this.state.item.itemName}</td>
-        <td>{this.formatUnits(this.state.item.amountString)}</td>
+        <td><div className= 'd-flex'>
+          <div className = 'd-inline-flex flex-column mr-2'>
+            <Button
+              color='change-count'
+              symbol = 'fa-caret-up'
+              handleClick={() => (this.changeQuantity('up'))}
+            />
+            <Button
+              color='change-count'
+              symbol='fa-caret-down'
+              handleClick={() => (this.changeQuantity('down'))}
+            /></div>
+          <span>{this.formatUnits(this.state.item.amountString)}</span>
+        </div>
+        </td>
         <td>{this.state.item.notes}</td>
         <td className="align-middle">
           <div className="table-row-buttons d-flex">
@@ -109,7 +133,7 @@ class InventoryRow extends React.Component {
             <Button
               color='add-button mb-auto ml-1'
               symbol='fa-pencil-alt'
-              handleClick={this.changeView} text='' />
+              handleClick={() => (this.changeView('edit'))} text='' />
           </div>
         </td>
       </tr>);
@@ -124,16 +148,39 @@ class InventoryRow extends React.Component {
               fieldValue={this.state.name}
             /></form></td>
           <td><form onSubmit={this.handleSubmit}>
-            <FormInput
-              handleChange={this.handleChange}
-              handleBlur={this.handleBlur}
-              fieldName="amount"
-              fieldValue={this.state.amount}
-              optionalField={(
-                <select name='unit' type='select' onChange={this.handleChange} value={this.state.unit.input}>
-                  {this.props.unitList.map(unit => <option key={unit.unitId} value={unit.unitId}>{unit.unitName}</option>)}
-                </select>)}
-            /></form></td>
+            <div className="d-flex">
+              <div className='d-inline-flex flex-column mr-2'>
+                <Button
+                  color='change-count'
+                  symbol='fa-caret-up'
+                  handleClick={() => (this.setState({ amount:
+                { input: this.state.amount.input + 1,
+                  isValid: false,
+                  isFocused: false
+                } }))}
+                />
+                <Button
+                  color='change-count'
+                  symbol='fa-caret-down'
+                  handleClick={() => (this.setState({ amount:
+                { input: this.state.amount.input - 1,
+                  isValid: false,
+                  isFocused: false
+                } }))}
+                /></div>
+              <FormInput
+                handleChange={this.handleChange}
+                handleBlur={this.handleBlur}
+                fieldName="amount"
+                fieldValue={this.state.amount}
+                optionalField={(
+                  <select name='unit' type='select' onChange={this.handleChange} value={this.state.unit.input}>
+                    {this.props.unitList.map(unit => <option key={unit.unitId} value={unit.unitId}>{unit.unitName}</option>)}
+                  </select>)}
+              />
+            </div>
+          </form>
+          </td>
           <td><form onSubmit={this.handleSubmit}>
             <FormInput
               handleChange={this.handleChange}
@@ -145,7 +192,7 @@ class InventoryRow extends React.Component {
             <div className="table-row-buttons d-flex">
               <Button color='delete-button mb-auto align-self-left'
                 symbol='fa-times'
-                handleClick={this.changeView} text='' />
+                handleClick={() => (this.changeView('info'))} text='' />
               <Button
                 color='add-button mb-auto ml-1'
                 symbol='fa-check'
