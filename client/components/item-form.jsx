@@ -26,9 +26,9 @@ class ItemForm extends React.Component {
       name: { input: '' },
       amount: { input: '' },
       notes: { input: '' },
-      nameError: { errorMessage: '', displayError: false },
-      amountError: { errorMessage: '', displayError: false },
-      notesError: { errorMessage: '', displayError: false }
+      nameError: { errorMessage: '- This field cannot be left blank', displayError: false },
+      amountError: { errorMessage: '- This field cannot be left blank', displayError: false },
+      notesError: { errorMessage: '- This field cannot be left blank', displayError: false }
     });
   }
 
@@ -45,13 +45,12 @@ class ItemForm extends React.Component {
         unitId: this.state.unit.input
       });
       this.handleClear();
+    } else {
+      this.setState({
+        nameError: { errorMessage: this.state.nameError.errorMessage, displayError: !this.state.name.isValid },
+        amountError: { errorMessage: this.state.amountError.errorMessage, displayError: !this.state.amount.isValid },
+        notesError: { errorMessage: this.state.notesError.errorMessage, displayError: !this.state.notes.isValid } });
     }
-    // else {
-    //   this.setState({
-    //     nameError: { errorMessage: this.state.nameError.errorMessage, displayError: !this.state.name.isValid },
-    //     amountError: { errorMessage: this.state.amountError.errorMessage, displayError: !this.state.amount.isValid },
-    //     notesError: { errorMessage: this.state.notesError.errorMessage, displayError: !this.state.notes.isValid } });
-    // }
   }
 
   handleChange(event) {
@@ -106,9 +105,9 @@ class ItemForm extends React.Component {
     const submitButtonClass = this.state.amount.isValid &&
     this.state.name.isValid &&
       this.state.notes.isValid ? 'btn-success' : 'btn-secondary';
-    const nameError = this.state.nameError.displayError && this.state.nameError.errorMessage ? <InvalidInput text={this.state.nameError.errorMessage}/> : null;
-    const amountError = this.state.amountError.displayError && this.state.amountError.errorMessage ? <InvalidInput text={this.state.amountError.errorMessage}/> : null;
-    const notesError = this.state.notesError.displayError && this.state.notesError.errorMessage ? <InvalidInput text={this.state.notesError.errorMessage}/> : null;
+    const nameError = this.state.nameError.displayError ? <InvalidInput text={this.state.nameError.errorMessage}/> : null;
+    const amountError = this.state.amountError.displayError ? <InvalidInput text={this.state.amountError.errorMessage}/> : null;
+    const notesError = this.state.notesError.displayError ? <InvalidInput text={this.state.notesError.errorMessage}/> : null;
     return (
       <form onSubmit={this.handleSubmit}>
         <div className="form-group">
