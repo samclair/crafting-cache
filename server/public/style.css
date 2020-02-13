@@ -86,6 +86,6 @@ html{
   padding: 0 .5rem !important;
 }
 
-table{
-  margin: auto;
+td{
+  vertical-align: middle !important;
 }
