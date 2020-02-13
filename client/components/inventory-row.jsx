@@ -121,7 +121,7 @@ class InventoryRow extends React.Component {
               symbol='fa-caret-down'
               handleClick={() => (this.changeQuantity('down'))}
             /></div>
-          <span>{this.formatUnits(this.state.item.amountString)}</span>
+          <span className = 'd-flex align-items-center'>{this.formatUnits(this.state.item.amountString)}</span>
         </div>
         </td>
         <td>{this.state.item.notes}</td>
