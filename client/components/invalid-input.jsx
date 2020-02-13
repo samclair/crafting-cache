@@ -4,7 +4,7 @@ function InvalidInput(props) {
 
   return (
     <>
-    <div className="mb-2 error-message">{props.text}</div>
+    <div className="mb-2 mt-2 error-message">{props.text}</div>
     </>
   );
 }

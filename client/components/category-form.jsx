@@ -25,12 +25,14 @@ class CategoryForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const categoryInput = this.state.category.input;
-    if (categoryInput.match(this.textPattern)) {
+    const category = this.state.category;
+    if (category.input.match(this.textPattern)) {
       this.props.onSubmit({
-        category: categoryInput
+        category: category.input.trim()
       });
       this.handleClear();
+    } else {
+      this.displayError();
     }
   }
 
