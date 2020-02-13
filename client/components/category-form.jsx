@@ -71,6 +71,7 @@ class CategoryForm extends React.Component {
 
   render() {
     const errorMessage = this.state.displayError ? <InvalidInput text={this.state.errorMessage} /> : null;
+    const submitButtonClass = this.state.category.isValid ? 'btn-success' : 'btn-secondary';
     return (
       <form onSubmit={this.handleSubmit}>
         <div className="form-group">
@@ -83,7 +84,7 @@ class CategoryForm extends React.Component {
             fieldValue = {this.state.category}
           />
           {errorMessage}
-          <button type="submit" onClick={this.handleSubmit} className="btn btn-success mr-1">Add</button>
+          <button type="submit" onClick={this.handleSubmit} className={'btn mr-1 ' + submitButtonClass}>Add</button>
           <button type="button" onClick={this.handleClear} className="btn btn-secondary">Cancel</button>
         </div>
       </form>
