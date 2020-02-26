@@ -33,11 +33,30 @@ async function addCategory(req, res) {
   } else {
     const sql = `INSERT INTO \`categories\` (\`categoryId\`, \`categoryName\`, \`userId\`)
   VALUES (NULL, '${req.body.categoryName}', '1')`;
-    await query(sql).catch(err => {
+    query(sql, async (err, result) => {
+      if (err) {
+        console.error(err);
+      } else {
+        res.status(202).send(await getInventoryInfo(result.insertId));
+      }
+    }).catch(err => {
       if (err) console.error(err);
     });
-    res.status(202).send('Category Created');
   }
+}
+
+async function getInventoryInfo(categoryId) {
+  const sql = `
+  SELECT\`c\`.\`categoryName\`, \`c\`.\`categoryId\`, COUNT(\`itemName\`) as inventoryCount
+  FROM\`categories\` AS\`c\`
+  LEFT JOIN\`inventory\` AS\`i\`
+  ON\`i\`.\`categoryId\` = \`c\`.\`categoryId\`
+  WHERE\`c\`.\`categoryId\` = ${categoryId}
+  GROUP BY\`c\`.\`categoryId\``;
+  const results = await query(sql).catch(err => {
+    if (err) console.error(err);
+  });
+  return results;
 }
 
 async function deleteCategory(req, res) {
