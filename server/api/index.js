@@ -28,14 +28,15 @@ async function getAllCategories(req, res) {
 
 async function addCategory(req, res) {
   if (!req.body.categoryName) {
-    res.stats(400).send('Category name is required');
-  }
-  const sql = `INSERT INTO \`categories\` (\`categoryId\`, \`categoryName\`, \`userId\`)
+    res.status(400).send('Category name is required');
+  } else {
+    const sql = `INSERT INTO \`categories\` (\`categoryId\`, \`categoryName\`, \`userId\`)
   VALUES (NULL, '${req.body.categoryName}', '1')`;
-  await query(sql).catch(err => {
-    if (err) console.error(err);
-  });
-  res.status(201).send('Category Created');
+    await query(sql).catch(err => {
+      if (err) console.error(err);
+    });
+    res.status(201).send('Category Created');
+  }
 }
 
 const PORT = process.env.PORT || 4000;
