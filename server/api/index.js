@@ -11,6 +11,7 @@ app.use(express.json());
 
 app.get('/api/categories', getAllCategories);
 app.post('/api/categories', addCategory);
+app.delete('/api/categories', deleteCategory);
 
 async function getAllCategories(req, res) {
   const sql = `
@@ -35,7 +36,21 @@ async function addCategory(req, res) {
     await query(sql).catch(err => {
       if (err) console.error(err);
     });
-    res.status(201).send('Category Created');
+    res.status(202).send('Category Created');
+  }
+}
+
+async function deleteCategory(req, res) {
+  if (!req.body.categoryId) {
+    res.status(400).send('Category ID is required');
+  } else {
+    const sql = ` DELETE
+  FROM\`categories\`
+  WHERE\`categories\`.\`categoryId\` = '${req.body.categoryId}'`;
+    await query(sql).catch(err => {
+      if (err) console.error(err);
+    });
+    res.status(200).send('Category Deleted');
   }
 }
 
