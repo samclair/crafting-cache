@@ -12,6 +12,7 @@ app.use(express.json());
 app.get('/api/categories', getAllCategories);
 app.post('/api/categories', addCategory);
 app.delete('/api/categories', deleteCategory);
+app.patch('/api/categories', updateCategory);
 
 async function getAllCategories(req, res) {
   const sql = `
@@ -70,6 +71,20 @@ async function deleteCategory(req, res) {
       if (err) console.error(err);
     });
     res.status(200).send('Category Deleted');
+  }
+}
+
+async function updateCategory(req, res) {
+  if (!req.body.categoryId || !req.body.categoryName) {
+    res.status(400).send('Category Name and Category ID are required');
+  } else {
+    const sql = `UPDATE \`categories\`
+  SET\`categoryName\` = '${req.body.categoryName}'
+  WHERE\`categories\`.\`categoryId\` = '${req.body.categoryId}'`;
+    await query(sql).catch(err => {
+      if (err) console.error(err);
+    });
+    res.status(202).send('Category Updated');
   }
 }
 
